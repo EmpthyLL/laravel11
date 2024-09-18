@@ -86,10 +86,10 @@
       <div x-show="isOpen" class="md:hidden" id="mobile-menu">
         <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
           <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-          <a href="{{ url('/') }}" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">Home</a>
-          <a href="{{ url('/about') }}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">About</a>
-          <a href="{{ url('/blog') }}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Blog</a>
-          <a href="{{ url('/contact') }}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white" >Contact</a>
+          <x-navlink :mobile="true" :active="request()->is('/')" href="{{ url('/') }}">Home</x-navlink>
+          <x-navlink :mobile="true" :active="request()->is('about')" href="{{ url('/about') }}">About</x-navlink>
+          <x-navlink :mobile="true" :active="request()->is('blog')" href="{{ url('blog') }}">Blog</x-navlink>
+          <x-navlink :mobile="true"  :active="request()->is('contact')" href="{{ url('contact') }}">Contact</x-navlink>
         </div>
         <div class="border-t border-gray-700 pb-3 pt-4">
           <div class="flex items-center px-5">
