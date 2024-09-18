@@ -1,20 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>About Us</title>
-</head>
-<body>
-    <nav>
-        <a href="{{ url('/') }}">Home</a>
-        <a href="{{ url('/about') }}">About</a>
-        <a href="{{ url('/blog') }}">Blog</a>
-        <a href="{{ url('/contact') }}">Contact</a>
-    </nav>
-    <h1>About Us</h1>
-    <p>Hallo, my name is {{ $nama }}.</p>
-    <img src="img/mikir 9.jpg" alt="" width="400">
-</body>
-</html>
+<x-layout>
+  <x-slot:title>{{ $title }}</x-slot:title>
+  <main>
+    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <img src="img/mikir 9.jpg" width="300px" class="mb-1 rounded-full p-2 border-2">
+      <p>Hi! My name is {{ $name }} and I'm an {{ $job }}.</p>
+    </div>
+  </main>
+</x-layout>

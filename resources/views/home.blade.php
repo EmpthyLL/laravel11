@@ -1,20 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home Page</title>
-    <link rel="stylesheet" href="css/index.css">
-</head>
-<body>
-    <nav>
-        <a href="{{ url('/') }}">Home</a>
-        <a href="{{ url('/about') }}">About</a>
-        <a href="{{ url('/blog') }}">Blog</a>
-        <a href="{{ url('/contact') }}">Contact</a>
-    </nav>
-    <h1>Home Page</h1>
-</body>
-<script src="js/index.js"></script>
-</html>
+<x-layout>
+  <x-slot:title>{{ $title }}</x-slot:title>
+  <main>
+    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
+        <?php for($i = 1; $i <= 8; $i++):?>
+          <img src="img/mikir {{ $i }}.jpg" class="rounded-lg border border-gray-400 p-1" alt="">
+        <?php endfor?>
+        <img src="img/mikir 15.jpg" class="border-2 border-gray-400 p-1 rounded-lg"  alt="">
+      </div>
+    </div>
+  </main>
+</x-layout>
