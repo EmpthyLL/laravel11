@@ -31,7 +31,7 @@
                   <button type="button" @click="isOpen = !isOpen" class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                     <span class="absolute -inset-1.5"></span>
                     <span class="sr-only">Open user menu</span>
-                    <img class="h-8 w-8 rounded-full" src="img/mikir 11.jpg" alt="">
+                    <img class="h-8 w-8 rounded-full" src="{{ asset('img/mikir 11.jpg') }}" alt="">
                   </button>
                 </div>
   
@@ -94,7 +94,7 @@
         <div class="border-t border-gray-700 pb-3 pt-4">
           <div class="flex items-center px-5">
             <div class="flex-shrink-0">
-              <img class="h-10 w-10 rounded-full" src="img/mikir 11.jpg" alt="">
+              <img class="h-8 w-8 rounded-full" src="{{ asset('img/mikir 11.jpg') }}" alt="">
             </div>
             <div class="ml-3">
               <div class="text-base font-medium leading-none text-white">Sarah Marc</div>

@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
+use App\Models\Blogs;
 
 Route::get('/', function () {
     return view('home', ["title" => "Home Page"]);
@@ -11,7 +13,16 @@ Route::get('/about', function () {
 });
 
 Route::get('/blog', function () {
-    return view('blog', ['many' => 5, "title" => "My Blogs"]);
+    $blogs = Blogs::getAll();
+    return view('blogs', ['blogs' => $blogs, "title" => "My Blogs"]);
+});
+
+Route::get('/blog/{id}', function ($id) {
+    $blog = Blogs::getById($id);
+    if (!$blog) {
+        abort(404, 'Blog not found');
+    }
+    return view('blog', ['blog' => $blog, "title" => $blog['title']]);
 });
 
 Route::get('/contact', function () {
