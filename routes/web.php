@@ -13,12 +13,12 @@ Route::get('/about', function () {
 });
 
 Route::get('/blog', function () {
-    $blogs = Blogs::getAll();
+    $blogs = Blogs::all();
     return view('blogs', ['blogs' => $blogs, "title" => "My Blogs"]);
 });
 
 Route::get('/blog/{id}', function ($id) {
-    $blog = Blogs::getById($id);
+    $blog = Blogs::find($id);
     if (!$blog) {
         abort(404, 'Blog not found');
     }
