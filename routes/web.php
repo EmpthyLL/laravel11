@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use App\Models\Blogs;
 
@@ -17,8 +16,7 @@ Route::get('/blog', function () {
     return view('blogs', ['blogs' => $blogs, "title" => "My Blogs"]);
 });
 
-Route::get('/blog/{id}', function ($id) {
-    $blog = Blogs::find($id);
+Route::get('/blog/{blog:blog_id}', function (Blogs $blog) {
     if (!$blog) {
         abort(404, 'Blog not found');
     }

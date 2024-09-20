@@ -3,7 +3,7 @@
   <main>
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div class="border-2 border-gray-300 shadow-lg hover:shadow-xl p-4 rounded-lg flex gap-4 bg-slate-100 items-center min-w-[400px] max-w-[500px]">
-            <img src="{{ asset('img/mikir 10.jpg') }}" width="200px" class="rounded-full p-1 border-2 border-gray-300 shadow-lg bg-blues-300" alt="Profile Picture">
+            <img src="{{ asset('img/mikir 10.jpg') }}" width="200px" class="rounded-full p-1 border-2 border-gray-300 shadow-lg bg-blue-300" alt="Profile Picture">
           <div>
               <h2 class="text-2xl font-bold tracking-tight text-gray-900">Sarah Marc</h2>
               <h3 class="text-xl tracking-tight text-gray-400">{{ $contact['email'] }}</h3>
