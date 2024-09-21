@@ -8,7 +8,7 @@
                     <div class="text-justify c1:min-w-[530px] c2:min-w-[300px]">
                         {!! Str::replace("\n", "<br>", $blog['body']) !!}
                     </div>
-                    <img src="{{ asset('img/mikir ' . ($blog['blog_id'] + 11 > 35 ? ($blog['blog_id'] + 11) % 35 + 11 : $blog['blog_id'] + 11) . '.jpg') }}"  
+                    <img src="{{ asset('img/mikir ' . (($blog['blog_id'] - 1) % 24 + 12) . '.jpg') }}"  
                         alt="Picture" 
                         class="rounded-lg w-full c2:max-w-[400px] h-auto object-cover">
                 </div>

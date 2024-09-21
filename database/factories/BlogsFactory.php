@@ -17,8 +17,8 @@ class BlogsFactory extends Factory
     public function definition(): array
     {
         return [
-            "title" => fake()->sentence(),
-            "body" => fake()->paragraph(),
+            "title" => fake()->words(rand(1, 5), true), // Generates a title with 1 to 5 words
+            "body" => fake()->paragraphs(rand(3, 6), true), // Generates a body with 3 to 6 paragraphs
         ];
     }
 }
