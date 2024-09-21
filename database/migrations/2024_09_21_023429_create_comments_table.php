@@ -11,15 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('myblogs', function (Blueprint $table) {
-            $table->id("blog_id");
-            $table->string("title");
-            $table->string("body");
+        Schema::create('comments', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
-            $table->foreignId('comment_id')->constrained(
-                table: 'comments',
-                indexName: 'blog_comment_id'
-            );
         });
     }
 
@@ -28,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('blogs');
+        Schema::dropIfExists('comments');
     }
 };

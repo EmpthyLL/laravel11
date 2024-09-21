@@ -4,7 +4,7 @@
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
       <div class="grid md:grid-cols-2  gap-4">
         @if (count($blogs) === 0)
-          <div class="rounded-lg p-6 bg-red-100 text-rose-600 shadow-md hover:shadow-lg hover:shadow-red-200 shadow-red-200 border border-rose-300 transition-shadow duration-300">
+          <div class="rounded-lg p-6 bg-rose-100 text-rose-600 shadow-lg hover:shadow-xl hover:shadow-rose-200 shadow-rose-200 border border-rose-300 transition-shadow duration-300">
               <div class="flex items-center gap-3 mb-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-info">
                       <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/>
@@ -36,7 +36,7 @@
                     </p>
                   </div>
                   <div>
-                    <img src="img/mikir {{ (($blog['blog_id'] - 1) % 24 + 12)}}.jpg" alt="Picture"  class="rounded-lg">
+                    <img src="img/photo_{{ (($blog['blog_id'] - 1) % 24 + 12)}}.jpg" alt="Picture"  class="rounded-lg">
                   </div>
                 </div>
             </article>
