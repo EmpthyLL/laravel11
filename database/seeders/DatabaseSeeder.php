@@ -2,22 +2,27 @@
 
 namespace Database\Seeders;
 
+use App\Models\Blogs;
+use App\Models\Comments;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Create 5 users
+        $users = User::factory(5)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Create 10 blogs and associate each blog with a random user
+        $blogs = Blogs::factory(10)->create();
+
+        // Create 25 comments, randomly assigning them to users and blogs
+        for ($i = 0; $i < 25; $i++) {
+            Comments::factory()->create([
+                'user_id' => $users->random()->id, // Randomly select a user
+                'blog_id' => $blogs->random()->id, // Randomly select a blog
+            ]);
+        }
     }
 }

@@ -16,10 +16,6 @@ return new class extends Migration
             $table->string("title");
             $table->string("body");
             $table->timestamps();
-            $table->foreignId('comment_id')->constrained(
-                table: 'comments',
-                indexName: 'blog_comment_id'
-            );
         });
     }
 

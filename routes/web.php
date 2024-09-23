@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Blogs;
+use App\Models\Comments;
 
 Route::get('/', function () {
     return view('home', ["title" => "Home Page"]);
@@ -13,7 +14,8 @@ Route::get('/about', function () {
 
 Route::get('/blog', function () {
     $blogs = Blogs::all();
-    return view('blogs', ['blogs' => $blogs, "title" => "My Blogs"]);
+    $comments = Comments::pluck("blog_id")->countBy();
+    return view('blogs', ['blogs' => $blogs, "title" => "My Blogs", "comments"=> $comments]);
 });
 
 Route::get('/blog/{blog:blog_id}', function (Blogs $blog) {
