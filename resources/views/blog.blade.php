@@ -2,8 +2,8 @@
     <x-slot:title>{{ $title }}</x-slot:title>
     <main>
         <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <a href="{{ url('/blog') }}" class="lg:hidden flex justify-start  mb-3 pl-8 text-lg text-blue-600 hover:underline items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-out-up-left"><path d="M13 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6"/><path d="m3 3 9 9"/><path d="M3 9V3h6"/></svg><span>See more blogs</span></a>
-            <div class="bg-gray-100 shadow-lg">
+            <a href="{{ url('/blog') }}" class="flex justify-end  mb-3 pr-8 text-lg text-blue-600 hover:underline items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-out-up-right"><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/><path d="m21 3-9 9"/><path d="M15 3h6v6"/></svg><span>See more blogs</span></a>
+            <div class="bg-gray-100 shadow-lg pb-4">
                 <div class="flex rounded-lg   py-8 px-10 flex-col c2:flex-row items-start gap-6">
                     <div class="text-justify c1:min-w-[530px] c2:min-w-[300px]">
                         {!! Str::replace("\n", "<br>", $blog['body']) !!}
@@ -25,8 +25,53 @@
                         </span>
                     </div>
                 </div>
+                <div>
+                    @if (count($comments) === 0)
+                    <div class="flex items-center space-x-2 mt-2 p-4 mx-2 bg-gray-100 max-w-md rounded-md text-gray-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-circle text-gray-500">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <span class="flex flex-col">
+                            <span class="font-semibold text-gray-700">
+                                No comments on this post!
+                            </span>
+                            <span class="text-gray-500">
+                                Be the first to share your thoughts.
+                            </span>
+                        </span>
+                    </div>
+                    @else
+                    <div class="flex flex-col gap-4 ">
+                        @foreach ($comments as $com)
+                        <div class="mx-2 border bg-white p-4 rounded-lg shadow-sm flex items-center gap-4">
+                            <!-- Large Image on the side -->
+                            <a href="{{ url('/profile/'.$com->user->username) }}"><img src="{{ asset('img/img_' . (($com->user->id - 1) % 25 + 1) . '.jpg') }}" alt="" class="rounded-full" width="70"></a>
+                        
+                            <!-- Comment content -->
+                            <div class="flex flex-col justify-between w-full">
+                                <!-- Header with user name and date -->
+                                <div class="flex items-start justify-between">
+                                    <a href="{{ url('/profile/'.$com->user->username) }}"><span class="font-semibold hover:underline text-gray-800">{{ $com->user->username }}</span></a>
+                                    <span class="text-sm text-gray-400">
+                                        {{ $blog['created_at'] == $blog['updated_at'] ? $blog['created_at']->diffForHumans() : $blog['updated_at']->diffForHumans()." (Edit)" }}
+                                    </span>
+                                </div>
+                        
+                                <!-- Comment Body -->
+                                <div class="text-gray-700 text-base mt-2">
+                                    {{ $com['body'] }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        @endforeach
+                    </div>
+                    @endif
+                </div>
             </div>
-            <a href="{{ url('/blog') }}" class="lg:flex hidden justify-start mt-3 pl-8 text-lg text-blue-600 hover:underline items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-out-up-left"><path d="M13 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6"/><path d="m3 3 9 9"/><path d="M3 9V3h6"/></svg><span>See more blogs</span></a>
+            {{-- <a href="{{ url('/blog') }}" class="lg:flex hidden justify-start mt-3 pl-8 text-lg text-blue-600 hover:underline items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-out-up-left"><path d="M13 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6"/><path d="m3 3 9 9"/><path d="M3 9V3h6"/></svg><span>See more blogs</span></a> --}}
         </div>
     </main>
 </x-layout>

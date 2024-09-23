@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Blogs;
 use App\Models\Comments;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('home', ["title" => "Home Page"]);
@@ -14,15 +15,20 @@ Route::get('/about', function () {
 
 Route::get('/blog', function () {
     $blogs = Blogs::all();
-    $comments = Comments::pluck("blog_id")->countBy();
-    return view('blogs', ['blogs' => $blogs, "title" => "My Blogs", "comments"=> $comments]);
+    return view('blogs', ['blogs' => $blogs, "title" => "My Blogs"]);
 });
 
 Route::get('/blog/{blog:blog_id}', function (Blogs $blog) {
     if (!$blog) {
         abort(404, 'Blog not found');
     }
-    return view('blog', ['blog' => $blog, "title" => $blog['title']]);
+    $comments = $blog->comments;
+
+    return view('blog', ['blog' => $blog, 'comments' => $comments, "title" => $blog['title']]);
+});
+
+Route::get('/profile/{user:username}', function (User $user) {
+    return view('profile', ["title" => $user->comments()]);
 });
 
 Route::get('/contact', function () {

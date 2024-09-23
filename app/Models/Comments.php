@@ -13,7 +13,7 @@ class Comments extends Model
 
     public function blog()
     {
-        return $this->belongsTo(Blogs::class, 'blog_id');
+        return $this->belongsTo(Blogs::class, 'blog_id', 'blog_id');
     }
 
     public function user()
