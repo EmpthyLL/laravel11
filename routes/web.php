@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Blogs;
-use App\Models\Comments;
 use App\Models\User;
 
 Route::get('/', function () {
@@ -23,12 +22,11 @@ Route::get('/blog/{blog:blog_id}', function (Blogs $blog) {
         abort(404, 'Blog not found');
     }
     $comments = $blog->comments;
-
     return view('blog', ['blog' => $blog, 'comments' => $comments, "title" => $blog['title']]);
 });
 
 Route::get('/profile/{user:username}', function (User $user) {
-    return view('profile', ["title" => $user->comments()]);
+    return view('profile', ["title" => $user->username, "user"=>$user]);
 });
 
 Route::get('/contact', function () {
