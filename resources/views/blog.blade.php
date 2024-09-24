@@ -43,29 +43,22 @@
                         </span>
                     </div>
                     @else
-                    <div class="flex flex-col gap-4 ">
+                    <div class="flex flex-col gap-4">
                         @foreach ($comments as $com)
-                        <div class="mx-2 border bg-white p-4 rounded-lg shadow-sm flex items-center gap-4">
-                            <!-- Large Image on the side -->
+                        <div class="mx-2 border bg-white p-4 rounded-lg shadow-sm flex items-center gap-4 max-w-max">
                             <a href="{{ url('/profile/'.$com->user->username) }}"><img src="{{ asset('img/img_' . (($com->user->id - 1) % 25 + 1) . '.jpg') }}" alt="" class="rounded-full" width="70"></a>
-                        
-                            <!-- Comment content -->
                             <div class="flex flex-col justify-between w-full">
-                                <!-- Header with user name and date -->
                                 <div class="flex items-start justify-between">
                                     <a href="{{ url('/profile/'.$com->user->username) }}"><span class="font-semibold hover:underline text-gray-800">{{ $com->user->username }}</span></a>
                                     <span class="text-sm text-gray-400">
                                         {{ $blog['created_at'] == $blog['updated_at'] ? $blog['created_at']->diffForHumans() : $blog['updated_at']->diffForHumans()." (Edit)" }}
                                     </span>
                                 </div>
-                        
-                                <!-- Comment Body -->
                                 <div class="text-gray-700 text-base mt-2">
                                     {{ $com['body'] }}
                                 </div>
                             </div>
                         </div>
-                        
                         @endforeach
                     </div>
                     @endif
