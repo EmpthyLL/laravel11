@@ -22,12 +22,9 @@
           <a href="{{ url('blog/'.$blog['blog_id']) }}" class="block">
             <article class="rounded-lg min-h-[290px] hover:shadow-lg p-4 shadow-md bg-gray-100">
               <h2 class="text-2xl flex items-center justify-between gap-4 font-bold tracking-tight text-gray-900">
-                <!-- Title section -->
                 <span class="truncate min-w-0 max-w-full flex-grow">{{ $blog['title'] }}</span>
               
-                <!-- Comments, Emoji, and Date Section -->
                 <span class="flex items-center gap-6 flex-shrink-0 pr-4">
-                  <!-- Comments section -->
                   <span class="flex items-center gap-2 text-gray-600">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-more">
                       <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
@@ -38,7 +35,6 @@
                     <span class="text-gray-400 text-base">{{ count($blog->comments) }}</span>
                   </span>
               
-                  <!-- Emoji section -->
                   <span class="flex items-center gap-1 text-gray-600">
                     <svg class="text-gray-600" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smile-plus">
                       <path d="M22 11v1a10 10 0 1 1-9-10"/>
@@ -50,7 +46,6 @@
                     </svg>
                   </span>
               
-                  <!-- Date section -->
                   <span class="text-lg font-light text-gray-400">
                     {{ $blog['created_at'] == $blog['updated_at'] ? $blog['created_at']->diffForHumans() : $blog['updated_at']->diffForHumans()." (Edit)" }}
                   </span>

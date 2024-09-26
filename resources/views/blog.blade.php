@@ -46,12 +46,12 @@
                     <div class="flex flex-col gap-4">
                         @foreach ($comments as $com)
                         <div class="mx-2 border bg-white p-4 rounded-lg shadow-sm flex items-center gap-4 max-w-max">
-                            <a href="{{ url('/profile/'.$com->user->username) }}"><img src="{{ asset('img/img_' . (($com->user->id - 1) % 25 + 1) . '.jpg') }}" alt="" class="rounded-full" width="70"></a>
+                            <a href="{{ url('/profile/'.$com->users->username) }}"><img src="{{ asset('img/img_' . (($com->users->id - 1) % 25 + 1) . '.jpg') }}" alt="" class="rounded-full" width="70"></a>
                             <div class="flex flex-col justify-between w-full">
                                 <div class="flex items-start justify-between">
-                                    <a href="{{ url('/profile/'.$com->user->username) }}"><span class="font-semibold hover:underline text-gray-800">{{ $com->user->username }}</span></a>
+                                    <a href="{{ url('/profile/'.$com->users->username) }}"><span class="font-semibold hover:underline text-gray-800">{{ $com->users->username }}</span></a>
                                     <span class="text-sm text-gray-400">
-                                        {{ $blog['created_at'] == $blog['updated_at'] ? $blog['created_at']->diffForHumans() : $blog['updated_at']->diffForHumans()." (Edit)" }}
+                                        {{ $com['created_at'] == $com['updated_at'] ? $com['created_at']->diffForHumans() : $com['updated_at']->diffForHumans()." (Edit)" }}
                                     </span>
                                 </div>
                                 <div class="text-gray-700 text-base mt-2">
