@@ -23,7 +23,7 @@
               <img src="{{ asset('img/img_' . (($comment->users->id - 1) % 25 + 1) . '.jpg') }}" alt="User Profile" class="rounded-full w-[70px] h-[70px]">
               <div class="flex flex-col justify-between w-full">
                 <div class="flex items-center justify-between gap-2">
-                  <span class="font-semibold text-gray-800 hover:underline">{{ $comment->users->username }}</span>
+                  <span class="font-semibold text-gray-800">{{ $comment->users->username }}</span>
                   <span class="text-sm text-gray-400">
                     {{ $comment['created_at'] == $comment['updated_at'] ? $comment['created_at']->diffForHumans() : $comment['updated_at']->diffForHumans()." (Edit)" }}
                   </span>

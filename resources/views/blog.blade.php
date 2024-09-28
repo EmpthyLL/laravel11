@@ -43,7 +43,7 @@
                         </span>
                     </div>
                     @else
-                    <div class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-2">
                         @foreach ($comments as $com)
                         <div class="mx-2 border bg-white p-4 rounded-lg shadow-sm flex items-center gap-4 max-w-max">
                             <a href="{{ url('/profile/'.$com->users->username) }}"><img src="{{ asset('img/img_' . (($com->users->id - 1) % 25 + 1) . '.jpg') }}" alt="" class="rounded-full" width="70"></a>
