@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('myblogs', function (Blueprint $table) {
             $table->id("blog_id");
+            $table->foreignId('category_id')->constrained('categories', 'id');
             $table->string("title");
             $table->string("body");
             $table->timestamps();
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('blogs');
+        Schema::dropIfExists('myblogs');
     }
 };
