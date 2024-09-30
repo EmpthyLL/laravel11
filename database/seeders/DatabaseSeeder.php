@@ -12,18 +12,40 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Create 5 users
-        $users = User::factory(50)->create();
+        // // Create users
+        // $users = User::factory(50)->create();
 
-        // Create 10 blogs and associate each blog with a random user
-        $blogs = Blogs::factory(20)->recycle(Categories::factory(5)->create())->create();
+        Categories::create([
+            "name" => "Dear Diary",
+            "slug" => "dear-diary",
+        ]);
+        Categories::create([
+            "name" => "Story Time",
+            "slug" => "story-time",
+        ]);
+        Categories::create([
+            "name" => "Mental Health",
+            "slug" => "mental-health",
+        ]);
+        Categories::create([
+            "name" => "Life",
+            "slug" => "life",
+        ]);
+        Categories::create([
+            "name" => "Travel Journal",
+            "slug" => "travel-journal",
+        ]);
+        
+        // // Create blogs by recycling existing categories
+        // $blogs = Blogs::factory(20)->recycle($categories)->create();
 
-        // Create 25 comments, randomly assigning them to users and blogs
-        for ($i = 0; $i < 120; $i++) {
-            Comments::factory()->create([
-                'user_id' => $users->random()->id, // Randomly select a user
-                'blog_id' => $blogs->random()->id, // Randomly select a blog
-            ]);
-        }
+        // // Create comments by recycling existing users and blogs
+        // Comments::factory(120)->recycle([$users, $blogs])->create();
+        // Comments::factory(120)->recycle($users)->recycle($blogs)->create();
+
+        // Comments::factory(120)->recycle(User::factory(50)->create())->recycle(Blogs::factory(20)->recycle(Categories::factory(5)->create())->create())->create();
+        Comments::factory(1000)->recycle([
+            User::factory(350)->create(), 
+            Blogs::factory(50)->recycle(Categories::all())->create()])->create();
     }
 }
