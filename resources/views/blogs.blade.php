@@ -115,8 +115,8 @@
 
 
 <script>
+  const searchInput = document.getElementById('search');
   document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('search');
     
     // If the input has a value, focus on it and move the cursor to the end
   if (searchInput.value) {
@@ -128,7 +128,9 @@
 
   // Submit the form when user types in the input
   function submitSearch() {
-    const form = document.getElementById('searchForm');
-    form.submit();
+    if(searchInput.value.trim() !== '' || searchInput.value === ''){
+      const form = document.getElementById('searchForm');
+      form.submit();
+    }
   }
 </script>

@@ -2,6 +2,7 @@
 export default {
     darkMode: "class",
     content: [
+        "./src/**/*.{js,jsx,ts,tsx,html}",
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
         "./resources/**/*.vue",

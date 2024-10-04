@@ -19,7 +19,7 @@ Route::get('/blog', function () {
     //     $blogs->where('title','like','%'.request('key').'%');
     // }
     $categories = Categories::all();
-    return view('blogs', ['blogs' => Blogs::with('comments')->filter(request(['key', 'category']))->latest()->paginate(6)->withQueryString(), 'key'=>request('key'), "categories"=>$categories, "title" => "My Blogs"]);
+    return view('blogs', ['blogs' => Blogs::with('comments')->filter(request(['key', 'category']))->latest()->paginate(6)->withQueryString(), 'key' => request('key'), "categories" => $categories, "title" => "My Blogs"]);
 });
 // Route::get('/blog/category/{category:slug}', function (Categories $category) {
 //     $categories = Categories::all();
@@ -28,14 +28,14 @@ Route::get('/blog', function () {
 
 Route::get('/blog/{blog:blog_id}', function (Blogs $blog) {
     if (!$blog) {
-        abort(404, 'Blog not found');
+        abort(404);
     }
     $comments = $blog->comments->load('users');
     return view('blog', ['blog' => $blog, 'comments' => $comments, "title" => $blog['title']]);
 });
 
 Route::get('/profile/{user:username}', function (User $user) {
-    return view('profile', ["title" => $user->username, "comments"=>$user->comments->load(['users', 'blogs'])]);
+    return view('profile', ["title" => $user->username, "comments" => $user->comments->load(['users', 'blogs'])]);
 });
 
 Route::get('/contact', function () {
