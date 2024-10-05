@@ -23,7 +23,7 @@
         }
     </style>
 </head>
-<body class="antialiased bg-gray-100 min-h-screen mb-10 flex items-center justify-center">
+<body class="antialiased bg-slate-300 min-h-screen mb-10 flex items-center justify-center">
     <div class="text-center">
         <svg class="emoji-404 mx-auto" enable-background="new 0 0 226 249.135" height="249.135" id="Layer_1" overflow="visible" version="1.1" viewBox="0 0 226 249.135" width="226" xml:space="preserve">
             <circle cx="113" cy="113" fill="#FFE585" r="109"/>

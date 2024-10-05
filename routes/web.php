@@ -5,6 +5,10 @@ use App\Models\Blogs;
 use App\Models\Categories;
 use App\Models\User;
 
+Route::get('/login', function () {
+    return view('login', ["title" => "Login Page"]);
+});
+
 Route::get('/', function () {
     return view('home', ["title" => "Home Page"]);
 });
@@ -34,7 +38,10 @@ Route::get('/blog/{blog:blog_id}', function (Blogs $blog) {
     return view('blog', ['blog' => $blog, 'comments' => $comments, "title" => $blog['title']]);
 });
 
-Route::get('/profile/{user:username}', function (User $user) {
+Route::get('/profile/{user:username}', function (User $user) {    
+    if (!$user) {
+        abort(404);
+    }
     return view('profile', ["title" => $user->username, "comments" => $user->comments->load(['users', 'blogs'])]);
 });
 
