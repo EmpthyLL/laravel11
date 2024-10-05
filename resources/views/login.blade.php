@@ -10,53 +10,70 @@
 </head>
 <body><!-- page -->
     <main
-    class="mx-auto flex min-h-screen w-full items-center justify-center bg-gray-900 text-white"
+    class="mx-auto flex min-h-screen w-full items-center justify-center bg-slate-800 text-white"
     >
-    <!-- component -->
-    <form action="">
-        <section class="flex w-full flex-col space-y-6 px-2 sm:px-0 sm:w-[24rem] xs:w-[20rem] 2xs:w-[16rem]">
-            <div class="text-center text-2xl font-medium sm:text-3xl">Log In</div>
+    <!-- Login Form -->
+    <form action="/login" method="POST" class="flex flex-col items-center justify-center gap-5 w-full">
+        <h1
+        class="font-semibold text-5xl sm:text-6xl text-center"
+        >
+        Welcome Back!
+        </h1>
+        <section
+        class="flex bg-gray-900 rounded-xl p-6 w-full flex-col space-y-6 px-4 sm:px-8 sm:w-[24rem] c4:w-[20rem]"
+        >
+        <!-- Login Header -->
+        <div class="text-center text-2xl font-medium sm:text-3xl">Log In</div>
 
-            <div
+        <!-- Username / Email Field -->
+        <div
             class="w-full transform border-b-2 bg-transparent text-base duration-300 focus-within:border-indigo-500"
-            >
+        >
             <input
-                type="text"
-                placeholder="Email or Username"
-                class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+            type="text"
+            placeholder="Email or Username"
+            name="identity"
+            required
+            class="w-full border-none bg-transparent text-gray-200 outline-none placeholder:italic placeholder-gray-400 focus:outline-none focus:text-indigo-200"
             />
-            </div>
+        </div>
 
-            <div
+        <!-- Password Field -->
+        <div
             class="w-full transform border-b-2 bg-transparent text-base duration-300 focus-within:border-indigo-500"
-            >
+        >
             <input
-                type="password"
-                placeholder="Password"
-                class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+            type="password"
+            placeholder="Password"
+            name="password"
+            required
+            class="w-full border-none bg-transparent text-gray-200 outline-none placeholder:italic placeholder-gray-400 focus:outline-none focus:text-indigo-200"
             />
-            </div>
+        </div>
 
-            <button
-            class="transform rounded-sm bg-indigo-600 py-2 font-semibold duration-300 hover:bg-indigo-400"
-            >
+        <!-- Login Button -->
+        <button
+            class="w-full rounded-lg bg-indigo-600 py-2 text-lg font-semibold tracking-wide duration-300 transform hover:bg-indigo-500 hover:scale-105"
+        >
             LOG IN
-            </button>
+        </button>
 
-            <a
+        <!-- Forgot Password Link -->
+        <a
             href="#"
             class="transform text-center text-sm font-semibold text-gray-500 duration-300 hover:text-gray-300"
             >FORGOT PASSWORD?</a
-            >
+        >
 
-            <p class="text-center text-sm sm:text-base">
+        <!-- Sign-up Link -->
+        <p class="text-center text-sm sm:text-base">
             No account?
             <a
-                href="{{ url('/register') }}"
-                class="font-medium text-indigo-500 underline-offset-4 hover:underline"
-                >Create One</a
+            href="{{ url('/register') }}"
+            class="font-medium text-indigo-500 underline-offset-4 hover:underline"
+            >Create One</a
             >
-            </p>
+        </p>
         </section>
     </form>
     </main>

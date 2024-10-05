@@ -1,13 +1,15 @@
 <?php
 
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Blogs;
 use App\Models\Categories;
 use App\Models\User;
 
-Route::get('/login', function () {
-    return view('login', ["title" => "Login Page"]);
-});
+Route::get('/login', [LoginController::class, 'index']);
+
+Route::get('/register', [RegisterController::class, 'index']);
 
 Route::get('/', function () {
     return view('home', ["title" => "Home Page"]);
@@ -38,7 +40,7 @@ Route::get('/blog/{blog:blog_id}', function (Blogs $blog) {
     return view('blog', ['blog' => $blog, 'comments' => $comments, "title" => $blog['title']]);
 });
 
-Route::get('/profile/{user:username}', function (User $user) {    
+Route::get('/profile/{user:username}', function (User $user) {
     if (!$user) {
         abort(404);
     }

@@ -18,6 +18,7 @@ export default {
                 c1: "1100px",
                 c2: "855px",
                 c3: "475px",
+                c4: "430px",
             },
             colors: {
                 primary: {
