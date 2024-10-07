@@ -19,36 +19,52 @@
         >
         Welcome Back!
         </h1>
+        @if (session()->has('registered'))
+            <div class="rounded-lg p-6 w-max bg-emerald-100 text-emerald-600 shadow hover:shadow-emerald-300 shadow-emerald-200 border border-emerald-300 transition-shadow duration-300">
+                <div class="flex items-center gap-3 mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
+                    <h2 class="text-3xl font-semibold tracking-tight">Welcome Aboard!</h2>
+                </div>
+                <p class="text-base text-emerald-500">
+                    "Woohoo! You're officially part of the club!"
+                </p>
+            </div>
+        @endif
         <section
         class="flex bg-gray-900 rounded-xl p-6 w-full flex-col space-y-6 px-4 sm:px-8 sm:w-[24rem] c4:w-[20rem]"
         >
         <!-- Login Header -->
         <div class="text-center text-2xl font-medium sm:text-3xl">Log In</div>
+        @csrf
 
         <!-- Username / Email Field -->
-        <div
-            class="w-full transform border-b-2 bg-transparent text-base duration-300 focus-within:border-indigo-500"
-        >
-            <input
-            type="text"
-            placeholder="Email or Username"
-            name="identity"
-            required
-            class="w-full border-none bg-transparent text-gray-200 outline-none placeholder:italic placeholder-gray-400 focus:outline-none focus:text-indigo-200"
-            />
+        <div>
+            <div class="w-full transform border-b-2 bg-transparent text-base duration-300 focus-within:border-indigo-500" >
+                <input 
+                    type="text" 
+                    name="identity" 
+                    value="{{ old('identity') }}"
+                    class="w-full border-none bg-transparent outline-none focus:outline-none rounded-t @error('identity') bg-red-500 placeholder:text-red-800 placeholder:italic placeholder:text-sm @enderror" 
+                    placeholder="Username or Email" 
+                />
+            </div>
+            @error('identity') 
+            <div  class="text-red-500 italic text-xs mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         <!-- Password Field -->
-        <div
-            class="w-full transform border-b-2 bg-transparent text-base duration-300 focus-within:border-indigo-500"
-        >
-            <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            required
-            class="w-full border-none bg-transparent text-gray-200 outline-none placeholder:italic placeholder-gray-400 focus:outline-none focus:text-indigo-200"
-            />
+        <div>
+            <div class="w-full transform border-b-2 bg-transparent text-base duration-300 focus-within:border-indigo-500">
+                <input type="password" name="password" id="pass" oninput="validatePasswords()" class="w-full rounded-t  border-none bg-transparent outline-none  focus:outline-none @error('password')
+                    bg-red-500 placeholder:text-red-800 placeholder:italic placeholder:text-sm
+                @enderror" 
+                    placeholder='Password'
+                />
+            </div>
+            @error('password') 
+            <div class="text-red-500 italic text-xs mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         <!-- Login Button -->

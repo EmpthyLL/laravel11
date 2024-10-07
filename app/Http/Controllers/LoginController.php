@@ -10,4 +10,10 @@ class LoginController extends Controller
     {
         return view("login", ['title' => 'login Page']);
     }
+    public function authenticate(Request $request){
+        $validated = $request->validate([
+            'identity' => 'required',
+            'password' => 'required',
+        ]);
+    }
 }

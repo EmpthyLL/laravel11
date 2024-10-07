@@ -8,6 +8,9 @@ use App\Models\Categories;
 use App\Models\User;
 
 Route::get('/login', [LoginController::class, 'index']);
+Route::post('/login', [LoginController::class, 'authenticate']);
+
+Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('/register', [RegisterController::class, 'index']);
 
