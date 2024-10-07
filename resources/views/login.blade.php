@@ -13,7 +13,7 @@
     class="mx-auto flex min-h-screen w-full items-center justify-center bg-slate-800 text-white"
     >
     <!-- Login Form -->
-    <form action="/login" method="POST" class="flex flex-col items-center justify-center gap-5 w-full">
+    <form action="{{ url('/login') }}" method="POST" class="flex flex-col items-center justify-center gap-5 w-full">
         <h1
         class="font-semibold text-5xl sm:text-6xl text-center"
         >
@@ -44,7 +44,8 @@
                     type="text" 
                     name="identity" 
                     value="{{ old('identity') }}"
-                    class="w-full border-none bg-transparent outline-none focus:outline-none rounded-t @error('identity') bg-red-500 placeholder:text-red-800 placeholder:italic placeholder:text-sm @enderror" 
+                    class="w-full border-none bg-transparent outline-none focus:outline-none rounded-t
+                    {{ $errors->has('identity') ? 'bg-red-500 placeholder:text-red-800 placeholder:italic' : 'bg-slate-700 placeholder:text-slate-400' }}" 
                     placeholder="Username or Email" 
                 />
             </div>
@@ -56,9 +57,8 @@
         <!-- Password Field -->
         <div>
             <div class="w-full transform border-b-2 bg-transparent text-base duration-300 focus-within:border-indigo-500">
-                <input type="password" name="password" id="pass" oninput="validatePasswords()" class="w-full rounded-t  border-none bg-transparent outline-none  focus:outline-none @error('password')
-                    bg-red-500 placeholder:text-red-800 placeholder:italic placeholder:text-sm
-                @enderror" 
+                <input type="password" name="password" id="pass" oninput="validatePasswords()" class="w-full rounded-t  border-none bg-transparent outline-none  focus:outline-none 
+                {{ $errors->has('password') ? 'bg-red-500 placeholder:text-red-800 placeholder:italic' : 'bg-slate-700 placeholder:text-slate-400' }}" 
                     placeholder='Password'
                 />
             </div>

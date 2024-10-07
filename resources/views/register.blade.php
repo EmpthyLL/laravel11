@@ -11,7 +11,7 @@
 <body>
     <main class="mx-auto flex min-h-screen w-full items-center justify-center bg-gray-900 text-white">
         <!-- Register Form -->
-        <form id="formRegister" action="/register" method="POST" class="flex flex-col items-center justify-center gap-5 w-full" onsubmit="submitForm(event)">
+        <form id="formRegister" action="{{ url('/register') }}" method="POST" class="flex flex-col items-center justify-center gap-5 w-full" onsubmit="submitForm(event)">
             <h1 class="font-semibold text-5xl sm:text-6xl text-center">Come Join Us!</h1>
             <section class="flex bg-slate-800 rounded-xl p-6 w-full flex-col space-y-6 px-4 sm:px-8 sm:w-[24rem] c4:w-[20rem]">
                 <div class="text-center text-2xl font-medium sm:text-3xl">Register</div>
@@ -23,7 +23,8 @@
                             type="text" 
                             name="username" 
                             value="{{ old('username') }}"
-                            class="w-full border-none bg-transparent outline-none focus:outline-none rounded-t @error('username') bg-red-500 placeholder:text-red-800 placeholder:italic placeholder:text-sm @enderror" 
+                            class="w-full border-none bg-transparent outline-none focus:outline-none rounded-t 
+                            {{ $errors->has('username') ? 'bg-red-500 placeholder:text-red-800 placeholder:italic' : 'bg-slate-700 placeholder:text-slate-400' }}" 
                             placeholder="Username" 
                         />
                     </div>
@@ -37,9 +38,8 @@
                     <input type="email" 
                     name="email" 
                     value="{{ old('email') }}"
-                    class="w-full border-none bg-transparent outline-none rounded-t focus:outline-none @error('email')
-                        bg-red-500 placeholder:text-red-800 placeholder:italic placeholder:text-sm
-                    @enderror" 
+                    class="w-full border-none bg-transparent outline-none rounded-t focus:outline-none 
+                    {{ $errors->has('email') ? 'bg-red-500 placeholder:text-red-800 placeholder:italic' : 'bg-slate-700 placeholder:text-slate-400' }}" 
                         placeholder="Email" 
                     />
                 </div>
@@ -53,22 +53,22 @@
                     <input type="text" 
                     name="fullname" 
                     value="{{ old('fullname') }}"
-                    class="w-full border-none bg-transparent outline-none rounded-t focus:outline-none @error('fullname')
-                        bg-red-500 placeholder:text-red-800 placeholder:italic placeholder:text-sm
-                    @enderror" 
+                    class="w-full border-none bg-transparent outline-none rounded-t focus:outline-none 
+                    {{ $errors->has('fullname') ? 'bg-red-500 placeholder:text-red-800 placeholder:italic' : 'bg-slate-700 placeholder:text-slate-400' }}" 
                         placeholder='Full Name (Optional)'
                     />
                 </div>
-                @error('fullname') 
-                <div class="text-red-500 italic text-xs mt-1">{{ $message }}</div>
-                @enderror
+                {{-- @error('fullname') 
+                <div class="text-amber-500  italic text-xs mt-1">
+                    Not feeling it? Just type <span class="font-semibold">"-"</span> and we'll call it even!
+                </div>
+                @enderror --}}
                 </div>
 
                 <div>
                 <div class="w-full transform border-b-2 bg-transparent text-base duration-300 focus-within:border-indigo-500">
-                    <input type="password" name="password" id="pass" oninput="validatePasswords()" class="w-full border-none bg-transparent outline-none  focus:outline-none @error('password')
-                        bg-red-500 placeholder:text-red-800 rounded-t  placeholder:italic placeholder:text-sm
-                    @enderror" 
+                    <input type="password" name="password" id="pass" oninput="validatePasswords()" class="w-full border-none bg-transparent outline-none rounded-t focus:outline-none 
+                    {{ $errors->has('password') ? 'bg-red-500 placeholder:text-red-800 placeholder:italic' : 'bg-slate-700 placeholder:text-slate-400' }}" 
                         placeholder='Password'
                     />
                 </div>
@@ -79,9 +79,8 @@
                 
                 <div>
                 <div class="w-full transform border-b-2 bg-transparent text-base duration-300 focus-within:border-indigo-500">
-                    <input type="password" name="confirm" id="conpass" oninput="validatePasswords()" class="w-full border-none bg-transparent outline-none  focus:outline-none @error('confirm')
-                        bg-red-500 placeholder:text-red-800 rounded-t  placeholder:italic placeholder:text-sm
-                    @enderror"
+                    <input type="password" name="confirm" id="conpass" oninput="validatePasswords()" class="w-full rounded-t border-none bg-transparent outline-none  focus:outline-none 
+                    {{ $errors->has('confirm') ? 'bg-red-500 placeholder:text-red-800 placeholder:italic' : 'bg-slate-700 placeholder:text-slate-400' }}" 
                         placeholder='Confirm Password' />
                 </div>
                 @error('confirm') 
