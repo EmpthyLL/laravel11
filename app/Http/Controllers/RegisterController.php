@@ -14,7 +14,12 @@ class RegisterController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'username' => 'required|unique:users|min:4|max:255',
+            'username' => ['required','unique:users','min:4', 'max:255', 
+            function ($attribute, $value, $fail) {
+                if (preg_match('/[^a-zA-Z0-9]/', $value)) {
+                    $fail('The ' . $attribute . ' must only contain letters and numbers.');
+                }
+            },],
             'email' => 'required|unique:users|email:dns',
             'fullname' => 'max:255',
             'password' => 'required|min:6|max:255',

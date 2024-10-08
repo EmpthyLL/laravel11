@@ -20,14 +20,35 @@
         Welcome Back!
         </h1>
         @if (session()->has('registered'))
-            <div class="rounded-lg p-6 w-max bg-emerald-100 text-emerald-600 shadow hover:shadow-emerald-300 shadow-emerald-200 border border-emerald-300 transition-shadow duration-300">
-                <div class="flex items-center gap-3 mb-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
-                    <h2 class="text-3xl font-semibold tracking-tight">Welcome Aboard!</h2>
+            <div id="successAlert"  role="alert" class="rounded-lg p-6 w-max flex gap-3 items-center bg-emerald-100 text-emerald-600 shadow hover:shadow-emerald-300 shadow-emerald-200 border border-emerald-300 transition-shadow duration-300">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
+                        <h2 class="sm:text-3xl text-2xl font-semibold tracking-tight">Welcome Aboard!</h2>
+                    </div>
+                    <p class="sm:text-base text-sm text-emerald-500">
+                        "<b>Woohoo!</b> You're officially part of the club!"
+                    </p>
                 </div>
-                <p class="text-base text-emerald-500">
-                    "Woohoo! You're officially part of the club!"
-                </p>
+            </div>
+        @endif
+        @if (session()->has('invalidCred'))
+            <div id="successAlert"  role="alert" class="rounded-lg p-6 w-max flex gap-3 items-center bg-rose-100 text-rose-600 shadow hover:shadow-rose-300 shadow-rose-200 border border-rose-300 transition-shadow duration-300">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
+                        <h2 class="sm:text-3xl text-2xl font-semibold tracking-tight">Login Failed!</h2>
+                    </div>
+                    <p class="sm:text-base text-sm text-rose-500">
+                        "<b>Oh no!</b> You are not allowed to enter!"
+                    </p>
+                </div>
+                <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-rose-100 text-rose-500 rounded-lg focus:ring-2 focus:ring-rose-400 p-1.5 hover:bg-rose-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-rose-400 dark:hover:bg-gray-700" data-dismiss-target="#successAlert" aria-label="Close">
+                    <span class="sr-only">Close</span>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                </button>
             </div>
         @endif
         <section
@@ -94,5 +115,6 @@
     </form>
     </main>
 </body>
+<script src="../path/to/flowbite/dist/flowbite.min.js"></script>
 </html>
     

@@ -7,7 +7,8 @@ use App\Models\Blogs;
 use App\Models\Categories;
 use App\Models\User;
 
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'])->middleware("guest");
+
 Route::post('/login', [LoginController::class, 'authenticate']);
 
 Route::post('/register', [RegisterController::class, 'store']);
