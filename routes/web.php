@@ -14,6 +14,7 @@ Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('/register', [RegisterController::class, 'index']);
+Route::post('/register', [RegisterController::class, 'index']);
 
 Route::get('/', function () {
     return view('home', ["title" => "Home Page"]);
@@ -44,11 +45,16 @@ Route::get('/blog/{blog:blog_id}', function (Blogs $blog) {
     return view('blog', ['blog' => $blog, 'comments' => $comments, "title" => $blog['title']]);
 });
 
+Route::get('/profile', function (User $user) {
+    $user = auth()->user();
+    return view('profile', ["title" => $user->username, "user" => $user->load(['comments'])]);
+});
+
 Route::get('/profile/{user:username}', function (User $user) {
     if (!$user) {
         abort(404);
     }
-    return view('profile', ["title" => $user->username, "comments" => $user->comments->load(['users', 'blogs'])]);
+    return view('profile', ["title" => $user->username, "user" => $user->load(['comments'])]);
 });
 
 Route::get('/contact', function () {
