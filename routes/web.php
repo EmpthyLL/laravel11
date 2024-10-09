@@ -7,14 +7,16 @@ use App\Models\Blogs;
 use App\Models\Categories;
 use App\Models\User;
 
-Route::get('/login', [LoginController::class, 'index'])->middleware("guest");
+Route::get('/login', [LoginController::class, 'index'])->middleware("guest")->name('login');
 
 Route::post('/login', [LoginController::class, 'authenticate']);
 
+Route::get('/logout', [LoginController::class, 'logout']);
+
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/register', [RegisterController::class, 'index']);
-Route::post('/register', [RegisterController::class, 'index']);
+Route::get('/register', [RegisterController::class, 'index'])->middleware("guest");;
+
 
 Route::get('/', function () {
     return view('home', ["title" => "Home Page"]);
@@ -48,7 +50,7 @@ Route::get('/blog/{blog:blog_id}', function (Blogs $blog) {
 Route::get('/profile', function (User $user) {
     $user = auth()->user();
     return view('profile', ["title" => $user->username, "user" => $user->load(['comments'])]);
-});
+})->middleware('auth');
 
 Route::get('/profile/{user:username}', function (User $user) {
     if (!$user) {

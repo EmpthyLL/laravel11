@@ -10,7 +10,7 @@
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                 <x-navlink :active="request()->is('/')" href="{{ url('/') }}">Home</x-navlink>
                 <x-navlink :active="request()->is('about')" href="{{ url('/about') }}">About</x-navlink>
-                <x-navlink :active="request()->is('blog')" href="{{ url('blog') }}">Blog</x-navlink>
+                <x-navlink :active="request()->is('blog*')" href="{{ url('blog') }}">Blog</x-navlink>
                 <x-navlink  :active="request()->is('contact')" href="{{ url('contact') }}">Contact</x-navlink>
               </div>
             </div>
@@ -35,7 +35,9 @@
                     {{-- <img class="h-8 w-8 rounded-full" src="{{ asset('img/photo_11.jpg') }}" alt=""> --}}
                     <img class="h-8 w-8 rounded-full" src="{{ asset('img/img_' . ((auth()->user()->id - 1) % 25 + 1) . '.jpg') }}" alt="">
                     @else
-                    <img class="h-8 w-8 rounded-full" src="{{ asset('img/profile.webp') }}" alt="">
+                    <div class="w-max text-gray-800 bg-slate-300 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-round"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>
+                    </div>
                     @endauth
                   </button>
                 </div>
@@ -52,6 +54,7 @@
                 -->
                 <div 
                 x-show="isOpen"
+                @click.away="isOpen = false"
                 x-transition:enter="transition ease-out duration-100 transform"
                 x-transition:enter-start="opacity-0 scale-95"
                 x-transition:enter-end="opacity-100 scale-100"
@@ -62,8 +65,10 @@
                   <!-- Active: "bg-gray-100", Not Active: "" -->
                   @auth
                   <a href="{{ url('/profile') }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
-                  <a href="{{ url('/login') }}" class="block border-t px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Change Password</a>
+                  <form action="{{ url('/logout') }}">
+                  <button class="block border-t px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</button>
+                  </form>
                   @else
                   <a href="{{ url('/login') }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Login</a>
                   <a href="{{ url('/register') }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Register</a>
@@ -98,7 +103,7 @@
           <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
           <x-navlink :mobile="true" :active="request()->is('/')" href="{{ url('/') }}">Home</x-navlink>
           <x-navlink :mobile="true" :active="request()->is('about')" href="{{ url('/about') }}">About</x-navlink>
-          <x-navlink :mobile="true" :active="request()->is('blog')" href="{{ url('blog') }}">Blog</x-navlink>
+          <x-navlink :mobile="true" :active="request()->is('blog*')" href="{{ url('blog') }}">Blog</x-navlink>
           <x-navlink :mobile="true"  :active="request()->is('contact')" href="{{ url('contact') }}">Contact</x-navlink>
         </div>
         <div class="border-t border-gray-700 pb-3 pt-4">
@@ -108,7 +113,9 @@
               {{-- <img class="h-8 w-8 rounded-full" src="{{ asset('img/photo_11.jpg') }}" alt=""> --}}
               <img class="h-8 w-8 rounded-full" src="{{ asset('img/img_' . ((auth()->user()->id - 1) % 25 + 1) . '.jpg') }}" alt="">
               @else
-              <img class="h-8 w-8 rounded-full" src="{{ asset('img/profile.webp') }}" alt="">
+              <div class="w-max text-gray-800 bg-slate-300 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="rou1.2d" stroke-linejoin="round" class="lucide lucide-circle-user-round"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>
+              </div>
               @endauth
             </div>
             <div class="ml-3">
@@ -132,8 +139,10 @@
           <div class="mt-3 space-y-1 px-2">
             @auth
             <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Your Profile</a>
-            <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Settings</a>
-            <a href="{{ url('/login') }}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign out</a>
+            <a href="{{ url('/profile') }}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Change Password</a>
+            <form action="{{ url('/logout') }}">
+            <button class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign out</button>
+            </form>
             @else
             <a href="{{ url('/login') }}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Login</a>
             <a href="{{ url('/register') }}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Register</a>
