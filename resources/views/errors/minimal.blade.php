@@ -43,7 +43,7 @@
             <span class="text-gray-500 text-xl">@yield('message')</span>
         </div>
         <div class="mt-6">
-            <a href="{{ url('/blog') }}" class="text-gray-500 font-mono text-xl bg-gray-200 p-3 rounded-md hover:shadow-md">Go back</a>
+            <a href="{{ url('/') }}" class="text-gray-500 font-mono text-xl bg-gray-200 p-3 rounded-md hover:shadow-md">Go back</a>
         </div>
     </div>
 </body>

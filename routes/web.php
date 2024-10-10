@@ -48,7 +48,7 @@ Route::get('/blog/{blog:blog_id}', function (Blogs $blog) {
     return view('blog', ['blog' => $blog, 'comments' => $comments, "title" => $blog['title']]);
 });
 
-Route::post('/blog', [BlogsController::class, 'store'])->middleware('auth');;
+Route::resource('/blog/create', BlogsController::class)->middleware('auth');
 
 Route::get('/profile', function () {
     $user = auth()->user();

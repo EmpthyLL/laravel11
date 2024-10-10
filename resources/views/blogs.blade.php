@@ -55,7 +55,7 @@
               <line x1="12" x2="12" y1="16" y2="12"/>
               <line x1="12" x2="12.01" y1="8" y2="8"/>
             </svg>
-            <h2 class="text-2xl font-semibold tracking-tight">No blogs posted yet!</h2>
+            <h2 class="text-2xl font-semibold tracking-tight">No blog is posted yet!</h2>
           </div>
           <p class="text-base text-rose-500">
             The Blog page will be updated soon. Stay tuned for new content!
@@ -137,11 +137,12 @@
         </button>
       </div>
       <div class="p-4 min-h-[70vh] overflow-y-auto">
-        <form action="{{ url('/blog') }}" method="POST" class="flex flex-col gap-4">
+        <form action="{{ url('/blog/create') }}" method="POST" class="flex flex-col gap-4">
+        @csrf
         <div class="grid c2:grid-cols-2 grid-cols-1 gap-2">
           <div>
             <label for="category" class="block text-xl font-medium mb-2 dark:text-white">What do you wanna write today?</label>
-            <select name="category" data-hs-select='{
+            <select name="category_id" data-hs-select='{
               "placeholder": "Select option...",
               "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
               "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-neutral-600",
@@ -155,16 +156,26 @@
               <option value="{{ $categ->id }}">{{ $categ->name }}</option>
               @endforeach
             </select>
+            <div class="text-red-500 italic text-lg hidden mt-1" id="catError">Please tell us what you wrote!</div>
           </div>
           <div>
             <label for="title" class="block text-xl font-medium mb-2 dark:text-white">Pick a title for the blog</label>
             <input type="text" name="title" id="title" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Enter blog title">
+            <div class="text-red-500 italic text-lg hidden mt-1" id="titleError">Please tell us what blog's title!</div>
           </div>
         </div>
         <div>
-            <label for="body" class="block text-xl font-medium mb-2 dark:text-white">Start to share your story!</label>
-            <input id="body" type="hidden" name="body" class="h-[35vh]">
-            <trix-editor input="body" class="h-[35vh] trix-Body"></trix-editor>
+          <label for="body" class="block text-xl font-medium mb-2 dark:text-white">Start to share your story!</label>
+          <input id="body" type="hidden" name="body">
+          <trix-editor input="body" class="trix-Body growable-editor min-h-[35vh]"></trix-editor>
+          <div class="text-red-500 italic text-lg hidden mt-1" id="contentError">Please tell us your story!</div>
+        </div>
+        <div class="c2:w-4/5  w-full">
+          <label for="thumbnail" class="block text-xl font-medium mb-2 dark:text-white">
+            Got a cool thumbnail? If not, we’ll choose cool image for you!</label>
+            <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
+            id="file_input" type="file" accept="image/*">
+            <img id="image_preview" src="" alt="Thumbnail Preview" class="mt-4 hidden max-w-full rounded-lg" />
         </div>
       </div>
       <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
@@ -200,4 +211,23 @@
       form.submit();
     }
   }
+
+  document.getElementById('file_input').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const imgElement = document.getElementById('image_preview');
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        imgElement.src = e.target.result;
+        imgElement.classList.remove('hidden'); // Show the image
+      };
+      reader.readAsDataURL(file); // Convert image to base64 URL
+    } else {
+      imgElement.classList.add('hidden'); // Hide the image if no file is selected
+      imgElement.src = ""; // Clear the image src
+    }
+  });
+
+
 </script>
