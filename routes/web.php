@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
@@ -47,7 +48,9 @@ Route::get('/blog/{blog:blog_id}', function (Blogs $blog) {
     return view('blog', ['blog' => $blog, 'comments' => $comments, "title" => $blog['title']]);
 });
 
-Route::get('/profile', function (User $user) {
+Route::post('/blog', [BlogsController::class, 'store'])->middleware('auth');;
+
+Route::get('/profile', function () {
     $user = auth()->user();
     return view('profile', ["title" => $user->username, "user" => $user->load(['comments'])]);
 })->middleware('auth');

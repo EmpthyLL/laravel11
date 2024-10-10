@@ -37,7 +37,7 @@
             id="search"
             oninput="submitSearch()"
           />
-          <button aria-haspopup="dialog" aria-expanded="false" aria-controls="AddBlogs" data-hs-overlay="#AddBlogs" type="button" class="w-max py-3 ml-4 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-cyan-500 text-white hover:bg-cyan-600 focus:outline-none focus:bg-cyan-600 disabled:opacity-50 disabled:pointer-events-none dark:bg-white dark:text-neutral-800">
+          <button aria-haspopup="dialog" aria-expanded="false" aria-controls="AddBlogs" data-hs-overlay="#AddBlogs" type="button" class="w-max py-3 ml-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-cyan-500 text-white hover:bg-cyan-600 focus:outline-none focus:bg-cyan-600 disabled:opacity-50 disabled:pointer-events-none dark:bg-white dark:text-neutral-800">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus">
               <path d="M5 12h14"/>
               <path d="M12 5v14"/>
@@ -122,7 +122,7 @@
 
 <div id="AddBlogs" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="AddBlogs-label">
   <div class="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 m-3 flex items-center lg:mx-auto min-h-[calc(100%-3.5rem)]">
-    <div class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70 transition-all duration-500 ease-in-out"
+    <div class="w-full mx-5 flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70 transition-all duration-500 ease-in-out"
       style="transition: width 0.5s ease-in-out;">
       <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
         <h3 id="AddBlogs-label" class="font-bold text-gray-800 text-4xl dark:text-white">
@@ -136,33 +136,46 @@
           </svg>
         </button>
       </div>
-      <div class="p-4 min-h-[40rem] overflow-y-auto">
+      <div class="p-4 min-h-[70vh] overflow-y-auto">
+        <form action="{{ url('/blog') }}" method="POST" class="flex flex-col gap-4">
         <div class="grid c2:grid-cols-2 grid-cols-1 gap-2">
           <div>
-            <label for="category" class="block text-xl font-medium mb-2 dark:text-white">What do you wanna write?</label>
-            <select name="category" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+            <label for="category" class="block text-xl font-medium mb-2 dark:text-white">What do you wanna write today?</label>
+            <select name="category" data-hs-select='{
+              "placeholder": "Select option...",
+              "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
+              "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-neutral-600",
+              "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700",
+              "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-200 dark:focus:bg-neutral-800",
+              "optionTemplate": "<div class=\"flex justify-between items-center w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 dark:text-blue-500 \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
+              "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-neutral-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+            }' class="hidden">
               <option selected disabled>Categories</option>
-              <option value="1">Dear Diary</option>
-              <option value="2">Story Time</option>
-              <option value="3">Mental Health</option>
-              <option value="4">Life</option>
-              <option value="5">Travel Journal</option>
+              @foreach ($categories as $categ)
+              <option value="{{ $categ->id }}">{{ $categ->name }}</option>
+              @endforeach
             </select>
           </div>
           <div>
-            <label for="title" class="block text-xl font-medium mb-2 dark:text-white">Blog's title</label>
-            <input type="text" id="title" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Enter blog title">
+            <label for="title" class="block text-xl font-medium mb-2 dark:text-white">Pick a title for the blog</label>
+            <input type="text" name="title" id="title" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Enter blog title">
           </div>
+        </div>
+        <div>
+            <label for="body" class="block text-xl font-medium mb-2 dark:text-white">Start to share your story!</label>
+            <input id="body" type="hidden" name="body" class="h-[35vh]">
+            <trix-editor input="body" class="h-[35vh] trix-Body"></trix-editor>
         </div>
       </div>
       <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
-        <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700">
-          Close
+        <button aria-label="Close" data-hs-overlay="#AddBlogs" type="submit" name="save" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700">
+          Save
         </button>
-        <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700">
-          Save changes
+        <button type="submit" name="post" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700">
+          Post Blog
         </button>
       </div>
+    </form>
     </div>
   </div>
 </div>

@@ -5,6 +5,7 @@
       <!-- Profile Card -->
       <div class="border relative border-yellow-200 shadow-lime-100 hover:shadow-lime-200 transition-shadow shadow-lg hover:shadow-xl p-6 rounded-lg bg-lime-100 flex flex-col items-center gap-6 h-max">
           <img src="{{ asset('img/img_' . (($user->id - 1) % 25 + 1) . '.jpg') }}" class="rounded-full w-[150px] p-1 border-2 border-yellow-200 shadow-lg bg-yellow-100" alt="Profile Picture">
+          @if (auth()->user()->id === $user->id)
           <div aria-haspopup="dialog" aria-expanded="false" aria-controls="changeProfile" data-hs-overlay="#changeProfile" class="absolute top-0 right-0 m-2 text-yellow-300 bg-gradient-to-r from-yellow-100 to-yellow-200 p-2 rounded-full shadow-lg hover:shadow-none transition-shadow duration-300 ease-in-out">
             <svg xmlns="http://www.w3.org/2000/svg" 
                 class="w-6 h-6" 
@@ -17,6 +18,7 @@
               <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
             </svg>
           </div>
+          @endif
         <div class="text-center">
           <h2 class="text-3xl font-bold tracking-tight text-emerald-900">{{ $user->fullname }}</h2>
           <h3 class="text-2xl tracking-tight text-emerald-400">{{ $user->email }}</h3>
