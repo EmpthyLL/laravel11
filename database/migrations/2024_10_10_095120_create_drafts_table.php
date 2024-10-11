@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('drafts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('categories', 'id')->nullable();
+            $table->foreignId('category_id')->nullable()->constrained('categories', 'id');
             $table->string("title")->nullable();
             $table->text("body")->nullable();
             $table->string("thumbnail")->nullable();

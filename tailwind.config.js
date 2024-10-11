@@ -10,6 +10,13 @@ export default {
         "node_modules/preline/dist/*.js",
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
     ],
+    safelist: [
+        {
+            pattern:
+                /(?:bg|hover:bg|text|hover:text|shadow|hover:shadow)-(rose|pink|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|neutral)-(50|100|200|300|400|500|600|700|800|900|950)?/,
+        },
+    ],
+
     theme: {
         extend: {
             screens: {

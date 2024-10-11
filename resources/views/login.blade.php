@@ -19,37 +19,13 @@
         >
         Welcome Back!
         </h1>
-        @if (session()->has('registered'))
-            <div id="successAlert"  role="alert" class="rounded-lg p-6 w-max flex gap-3 items-center bg-emerald-100 text-emerald-600 shadow hover:shadow-emerald-300 shadow-emerald-200 border border-emerald-300 transition-shadow duration-300">
-                <div>
-                    <div class="flex items-center gap-3 mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
-                        <h2 class="sm:text-3xl text-2xl font-semibold tracking-tight">Welcome Aboard!</h2>
-                    </div>
-                    <p class="sm:text-base text-sm text-emerald-500">
-                        "<b>Woohoo!</b> You're officially part of the club!"
-                    </p>
-                </div>
-            </div>
-        @endif
+        {{-- @if (session()->has('registered')) --}}
+            <x-alert message="<b>Woohoo!</b> You're officially part of the club!" header="Welcome Aboard!" icon='
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>'>emerald</x-alert>
+        {{-- @endif --}}
         @if (session()->has('invalidCred'))
-            <div id="successAlert"  role="alert" class="rounded-lg p-6 w-max flex gap-3 items-center bg-rose-100 text-rose-600 shadow hover:shadow-rose-300 shadow-rose-200 border border-rose-300 transition-shadow duration-300">
-                <div>
-                    <div class="flex items-center gap-3 mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
-                        <h2 class="sm:text-3xl text-2xl font-semibold tracking-tight">Login Failed!</h2>
-                    </div>
-                    <p class="sm:text-base text-sm text-rose-500">
-                        "<b>Oh no!</b> You are not allowed to enter!"
-                    </p>
-                </div>
-                <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-rose-100 text-rose-500 rounded-lg focus:ring-2 focus:ring-rose-400 p-1.5 hover:bg-rose-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-rose-400 dark:hover:bg-gray-700" data-dismiss-target="#successAlert" aria-label="Close">
-                    <span class="sr-only">Close</span>
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                </button>
-            </div>
+            <x-alert :dismisable="true" message="<b>Oh no!</b> You are not allowed to enter!" header="Login Failed!" icon='
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-x"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>'>rose</x-alert>
         @endif
         <section
         class="flex bg-gray-900 rounded-xl p-6 w-full flex-col space-y-6 px-4 sm:px-8 sm:w-[24rem] c4:w-[20rem]"
@@ -60,12 +36,12 @@
 
         <!-- Username / Email Field -->
         <div>
-            <div class="w-full transform border-b-2 bg-transparent text-base duration-300 focus-within:border-indigo-500" >
+            <div class="w-full transform border-b-2 text-base duration-300 focus-within:border-indigo-500" >
                 <input 
                     type="text" 
                     name="identity" 
                     value="{{ old('identity') }}"
-                    class="w-full border-none bg-transparent outline-none focus:outline-none rounded-t
+                    class="w-full border-none outline-none focus:outline-none rounded-t
                     {{ $errors->has('identity') ? 'bg-red-500 placeholder:text-red-800 placeholder:italic' : 'bg-slate-700 placeholder:text-slate-400' }}" 
                     placeholder="Username or Email" 
                 />
@@ -77,8 +53,8 @@
 
         <!-- Password Field -->
         <div>
-            <div class="w-full transform border-b-2 bg-transparent text-base duration-300 focus-within:border-indigo-500">
-                <input type="password" name="password" id="pass" oninput="validatePasswords()" class="w-full rounded-t  border-none bg-transparent outline-none  focus:outline-none 
+            <div class="w-full transform border-b-2 text-base duration-300 focus-within:border-indigo-500">
+                <input type="password" name="password" id="pass" oninput="validatePasswords()" class="w-full rounded-t  border-none outline-none  focus:outline-none 
                 {{ $errors->has('password') ? 'bg-red-500 placeholder:text-red-800 placeholder:italic' : 'bg-slate-700 placeholder:text-slate-400' }}" 
                     placeholder='Password'
                 />
@@ -115,6 +91,5 @@
     </form>
     </main>
 </body>
-<script src="../path/to/flowbite/dist/flowbite.min.js"></script>
 </html>
     

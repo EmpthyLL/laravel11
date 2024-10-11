@@ -44,8 +44,9 @@ Route::get('/blog/{blog:blog_id}', function (Blogs $blog) {
     if (!$blog) {
         abort(404);
     }
+    $categories = Categories::all();
     $comments = $blog->comments->load('users');
-    return view('blog', ['blog' => $blog, 'comments' => $comments, "title" => $blog['title']]);
+    return view('blog', ['blog' => $blog, 'comments' => $comments, "categories" => $categories, "title" => $blog['title']]);
 });
 
 Route::resource('/blog/create', BlogsController::class)->middleware('auth');

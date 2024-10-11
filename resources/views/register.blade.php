@@ -18,12 +18,12 @@
                 @csrf
 
                 <div>
-                    <div class="w-full transform border-b-2 bg-transparent text-base duration-300 focus-within:border-indigo-500" >
+                    <div class="w-full transform border-b-2 text-base duration-300 focus-within:border-indigo-500" >
                         <input 
                             type="text" 
                             name="username" 
                             value="{{ old('username') }}"
-                            class="w-full border-none bg-transparent outline-none focus:outline-none rounded-t 
+                            class="w-full border-none outline-none focus:outline-none rounded-t 
                             {{ $errors->has('username') ? 'bg-red-500 placeholder:text-red-800 placeholder:italic' : 'bg-slate-700 placeholder:text-slate-400' }}" 
                             placeholder="Username" 
                         />
@@ -34,11 +34,11 @@
                 </div>
                 
                 <div>
-                <div class="w-full transform border-b-2 bg-transparent text-base duration-300 focus-within:border-indigo-500">
+                <div class="w-full transform border-b-2 text-base duration-300 focus-within:border-indigo-500">
                     <input type="email" 
                     name="email" 
                     value="{{ old('email') }}"
-                    class="w-full border-none bg-transparent outline-none rounded-t focus:outline-none 
+                    class="w-full border-none outline-none rounded-t focus:outline-none 
                     {{ $errors->has('email') ? 'bg-red-500 placeholder:text-red-800 placeholder:italic' : 'bg-slate-700 placeholder:text-slate-400' }}" 
                         placeholder="Email" 
                     />
@@ -49,11 +49,11 @@
                 </div>
 
                 <div>
-                <div class="w-full transform border-b-2 bg-transparent text-base duration-300 focus-within:border-indigo-500">
+                <div class="w-full transform border-b-2 text-base duration-300 focus-within:border-indigo-500">
                     <input type="text" 
                     name="fullname" 
                     value="{{ old('fullname') }}"
-                    class="w-full border-none bg-transparent outline-none rounded-t focus:outline-none 
+                    class="w-full border-none outline-none rounded-t focus:outline-none 
                     {{ $errors->has('fullname') ? 'bg-red-500 placeholder:text-red-800 placeholder:italic' : 'bg-slate-700 placeholder:text-slate-400' }}" 
                         placeholder='Full Name (Optional)'
                     />
@@ -66,8 +66,8 @@
                 </div>
 
                 <div>
-                <div class="w-full transform border-b-2 bg-transparent text-base duration-300 focus-within:border-indigo-500">
-                    <input type="password" name="password" id="pass" oninput="validatePasswords()" class="w-full border-none bg-transparent outline-none rounded-t focus:outline-none 
+                <div class="w-full transform border-b-2 text-base duration-300 focus-within:border-indigo-500">
+                    <input type="password" name="password" id="pass" oninput="validatePasswords()" class="w-full border-none outline-none rounded-t focus:outline-none 
                     {{ $errors->has('password') ? 'bg-red-500 placeholder:text-red-800 placeholder:italic' : 'bg-slate-700 placeholder:text-slate-400' }}" 
                         placeholder='Password'
                     />
@@ -78,8 +78,8 @@
                 </div>
                 
                 <div>
-                <div class="w-full transform border-b-2 bg-transparent text-base duration-300 focus-within:border-indigo-500">
-                    <input type="password" name="confirm" id="conpass" oninput="validatePasswords()" class="w-full rounded-t border-none bg-transparent outline-none  focus:outline-none 
+                <div class="w-full transform border-b-2 text-base duration-300 focus-within:border-indigo-500">
+                    <input type="password" name="confirm" id="conpass" oninput="validatePasswords()" class="w-full rounded-t border-none outline-none  focus:outline-none 
                     {{ $errors->has('confirm') ? 'bg-red-500 placeholder:text-red-800 placeholder:italic' : 'bg-slate-700 placeholder:text-slate-400' }}" 
                         placeholder='Confirm Password' />
                 </div>

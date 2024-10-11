@@ -47,7 +47,15 @@
       </div>
     </div>
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-    <form id="searchForm" class="w-full sm:w-10/1 2 lg:w-8/12">
+    @if (session()->has('post'))
+      <x-alert size="" message="<b>Woohoo!</b> Thank you for sharing your story!" header="Blog has been posted!" icon='
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>'>green</x-alert>
+    @endif
+    @if (session()->has('save'))
+      <x-alert size="" message="<b>Let go!</b> You are making a huge progress!" header="Blog has been save!" icon='
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>'>yellow</x-alert>
+    @endif
+    <form id="searchForm" class="w-full mt-4 sm:w-10/1 2 lg:w-8/12">
       <div class="items-center mb-3 space-y-4 sm:flex sm:space-y-0">
         <div class="items-center flex relative w-full">
           <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -80,19 +88,12 @@
       </div>
     </form>
         @if (count($blogs) === 0)
-        <div class="rounded-lg p-6 w-full sm:w-2/3 lg:w-1/2 bg-rose-100 text-rose-600 shadow-lg hover:shadow-xl hover:shadow-rose-300 shadow-rose-200 border border-rose-300 transition-shadow duration-300">
-          <div class="flex items-center gap-3 mb-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-info">
+        <x-alert shadow="" size="sm:w-2/3 lg:w-1/2" message="The Blog page will be updated soon. Stay tuned for new content!" header="No blog is posted yet!" icon='
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-info">
               <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/>
               <line x1="12" x2="12" y1="16" y2="12"/>
               <line x1="12" x2="12.01" y1="8" y2="8"/>
-            </svg>
-            <h2 class="text-2xl font-semibold tracking-tight">No blog is posted yet!</h2>
-          </div>
-          <p class="text-base text-rose-500">
-            The Blog page will be updated soon. Stay tuned for new content!
-          </p>
-        </div>
+            </svg>'>rose</x-alert>
         @else 
         {{ $blogs->links() }}
           <div class="grid md:grid-cols-2 mt-4 mb-4 grid-cols-1 gap-4">
@@ -130,14 +131,14 @@
                         </span>
                     </h2>
                     
-                    <div class="flex items-center gap-4 mt-2">
-                        <div class="flex-1">
-                            <div class="text-justify mt-2 overflow-hidden text-ellipsis max-h-[160px] BodyWithTags">
+                    <div class="flex items-center justify-between gap-4 mt-2">
+                        <div class="flex">
+                            <div class="text-justify mt-2 overflow-hidden text-ellipsis max-h-[160px] max-w-[380px] BodyWithTags">
                                 {!! limitHtml($blog['body'], 275) !!} 
                                 <span class="inline text-blue-600 hover:underline">Read more</span>
                             </div>
                         </div>
-                        <div>
+                        <div class="ml-4">
                             <img src="{{ asset('img/photo_' . (($blog['blog_id'] - 1) % 24 + 12) . '.jpg') }}" alt="Picture" class="rounded-lg max-h-[170px] w-full object-cover">
                         </div>
                     </div>
@@ -168,6 +169,7 @@
           </svg>
         </button>
       </div>
+      
       <div class="p-4 min-h-[70vh] overflow-y-auto">
           <form id="blogForm" action="{{ url('/blog/create') }}" method="POST" class="flex flex-col gap-4">
               @csrf
