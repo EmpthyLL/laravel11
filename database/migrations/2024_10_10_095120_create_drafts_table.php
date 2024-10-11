@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('drafts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('categories', 'id');
-            $table->string("title");
-            $table->text("body");
-            $table->text("thumbnail");
+            $table->foreignId('category_id')->constrained('categories', 'id')->nullable();
+            $table->string("title")->nullable();
+            $table->text("body")->nullable();
+            $table->string("thumbnail")->nullable();
             $table->timestamps();
         });
     }

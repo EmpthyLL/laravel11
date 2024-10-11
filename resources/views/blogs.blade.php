@@ -1,3 +1,35 @@
+@php
+    function limitHtml($html, $limit) {
+    $length = 0;
+    $result = '';
+    $isInsideTag = false;
+
+    // Use regex to find the tags and text
+    preg_match_all('/<[^>]+>|[^<]+/', $html, $matches);
+
+    foreach ($matches[0] as $part) {
+        // Check if it's a tag
+        if (strpos($part, '<') === 0) {
+            $result .= $part; // Append the tag directly
+            $isInsideTag = true; // We are inside a tag
+        } else {
+            // It's a text part
+            if ($length + strlen($part) > $limit) {
+                // If adding this part exceeds the limit, truncate it
+                $remaining = $limit - $length;
+                $result .= substr($part, 0, $remaining);
+                break; // Stop processing further
+            }
+
+            $result .= $part; // Append the text part
+            $length += strlen($part); // Update the total length
+        }
+    }
+
+    return $result;
+  }
+@endphp
+
 <x-layout>
   <x-slot:title>{{ $title }}</x-slot:title>
   <main>
@@ -28,7 +60,7 @@
           <input type="hidden" name="category" value="{{ request('category') }}">
           @endif
           <input
-            class="block p-3 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            class="block p-3 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-white dark:focus:border-white"
             placeholder="Type here to find desirable blogs..."
             name="key"
             type="search"
@@ -66,50 +98,50 @@
           <div class="grid md:grid-cols-2 mt-4 mb-4 grid-cols-1 gap-4">
             @foreach ($blogs as $blog)
             <a href="{{ url('blog/'.$blog['blog_id']) }}" class="block">
-              <article class="rounded-lg min-h-[290px] hover:shadow-lg p-4 shadow-md bg-gray-100">
-                <h2 class="text-2xl flex items-center justify-between gap-4 font-bold tracking-tight text-gray-900">
-                  <span class="truncate min-w-0 max-w-full flex-grow">{{ $blog['title'] }}</span>
-                
-                  <span class="flex items-center gap-6 flex-shrink-0 pr-4">
-                    <span class="flex items-center gap-2 text-gray-600">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-more">
-                        <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
-                        <path d="M8 12h.01"/>
-                        <path d="M12 12h.01"/>
-                        <path d="M16 12h.01"/>
-                      </svg>
-                      <span class="text-gray-400 text-base">{{ count($blog->comments) }}</span>
-                    </span>
-                
-                    <span class="flex items-center gap-1 text-gray-600">
-                      <svg class="text-gray-600" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smile-plus">
-                        <path d="M22 11v1a10 10 0 1 1-9-10"/>
-                        <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
-                        <line x1="9" x2="9.01" y1="9" y2="9"/>
-                        <line x1="15" x2="15.01" y1="9" y2="9"/>
-                        <path d="M16 5h6"/>
-                        <path d="M19 2v6"/>
-                      </svg>
-                    </span>
-                
-                    <span class="text-lg font-light text-gray-400">
-                      {{ $blog['created_at'] == $blog['updated_at'] ? $blog['created_at']->diffForHumans() : $blog['updated_at']->diffForHumans()." (Edit)" }}
-                    </span>
-                  </span>
-                </h2>
-                
-                  <div class="flex items-center gap-4 mt-2">
-                    <div>
-                      <p class="text-justify mt-2 overflow-hidden text-ellipsis max-h-[170px]">
-                          {{ Str::limit($blog['body'], 275) }}
-                          <span class="inline text-blue-600 hover:underline">Read more</span>
-                      </p>
+                <article class="rounded-lg min-h-[290px] hover:shadow-lg p-4 shadow-md bg-gray-100">
+                    <h2 class="text-2xl flex items-center justify-between gap-4 font-bold tracking-tight text-gray-900">
+                        <span class="truncate min-w-0 max-w-full flex-grow">{{ $blog['title'] }}</span>
+                        
+                        <span class="flex items-center gap-6 flex-shrink-0 pr-4">
+                            <span class="flex items-center gap-2 text-gray-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-more">
+                                    <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+                                    <path d="M8 12h.01"/>
+                                    <path d="M12 12h.01"/>
+                                    <path d="M16 12h.01"/>
+                                </svg>
+                                <span class="text-gray-400 text-base">{{ count($blog->comments) }}</span>
+                            </span>
+                        
+                            <span class="flex items-center gap-1 text-gray-600">
+                                <svg class="text-gray-600" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smile-plus">
+                                    <path d="M22 11v1a10 10 0 1 1-9-10"/>
+                                    <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                                    <line x1="9" x2="9.01" y1="9" y2="9"/>
+                                    <line x1="15" x2="15.01" y1="9" y2="9"/>
+                                    <path d="M16 5h6"/>
+                                    <path d="M19 2v6"/>
+                                </svg>
+                            </span>
+                        
+                            <span class="text-lg font-light text-gray-400">
+                                {{ $blog['created_at'] == $blog['updated_at'] ? $blog['created_at']->diffForHumans() : $blog['updated_at']->diffForHumans()." (Edit)" }}
+                            </span>
+                        </span>
+                    </h2>
+                    
+                    <div class="flex items-center gap-4 mt-2">
+                        <div class="flex-1">
+                            <div class="text-justify mt-2 overflow-hidden text-ellipsis max-h-[160px] BodyWithTags">
+                                {!! limitHtml($blog['body'], 275) !!} 
+                                <span class="inline text-blue-600 hover:underline">Read more</span>
+                            </div>
+                        </div>
+                        <div>
+                            <img src="{{ asset('img/photo_' . (($blog['blog_id'] - 1) % 24 + 12) . '.jpg') }}" alt="Picture" class="rounded-lg max-h-[170px] w-full object-cover">
+                        </div>
                     </div>
-                    <div>
-                      <img src="{{ asset('img/photo_' . (($blog['blog_id'] - 1) % 24 + 12) . '.jpg') }}" alt="Picture" class="rounded-lg">
-                    </div>
-                  </div>
-              </article>
+                </article>
             </a>
             @endforeach
           </div>
@@ -137,58 +169,50 @@
         </button>
       </div>
       <div class="p-4 min-h-[70vh] overflow-y-auto">
-        <form action="{{ url('/blog/create') }}" method="POST" class="flex flex-col gap-4">
-        @csrf
-        <div class="grid c2:grid-cols-2 grid-cols-1 gap-2">
-          <div>
-            <label for="category" class="block text-xl font-medium mb-2 dark:text-white">What do you wanna write today?</label>
-            <select name="category_id" data-hs-select='{
-              "placeholder": "Select option...",
-              "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
-              "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-neutral-600",
-              "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700",
-              "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-200 dark:focus:bg-neutral-800",
-              "optionTemplate": "<div class=\"flex justify-between items-center w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 dark:text-blue-500 \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
-              "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-neutral-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
-            }' class="hidden">
-              <option selected disabled>Categories</option>
-              @foreach ($categories as $categ)
-              <option value="{{ $categ->id }}">{{ $categ->name }}</option>
-              @endforeach
-            </select>
-            <div class="text-red-500 italic text-lg hidden mt-1" id="catError">Please tell us what you wrote!</div>
-          </div>
-          <div>
-            <label for="title" class="block text-xl font-medium mb-2 dark:text-white">Pick a title for the blog</label>
-            <input type="text" name="title" id="title" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Enter blog title">
-            <div class="text-red-500 italic text-lg hidden mt-1" id="titleError">Please tell us what blog's title!</div>
-          </div>
-        </div>
-        <div>
-          <label for="body" class="block text-xl font-medium mb-2 dark:text-white">Start to share your story!</label>
-          <input id="body" type="hidden" name="body">
-          <trix-editor input="body" class="trix-Body growable-editor min-h-[35vh]"></trix-editor>
-          <div class="text-red-500 italic text-lg hidden mt-1" id="contentError">Please tell us your story!</div>
-        </div>
-        <div class="c2:w-4/5  w-full">
-          <label for="thumbnail" class="block text-xl font-medium mb-2 dark:text-white">
-            Got a cool thumbnail? If not, we’ll choose cool image for you!</label>
-            <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
-            id="file_input" type="file" accept="image/*">
-            <img id="image_preview" src="" alt="Thumbnail Preview" class="mt-4 hidden max-w-full rounded-lg" />
-        </div>
+          <form id="blogForm" action="{{ url('/blog/create') }}" method="POST" class="flex flex-col gap-4">
+              @csrf
+              <div class="grid c2:grid-cols-2 grid-cols-1 gap-2">
+                  <div>
+                      <label for="category" class="block text-xl font-medium mb-2 dark:text-white">What do you wanna write today?</label>
+                      <select id="category" name="category_id" data-hs-select='{
+                        "placeholder": "Select option...",
+                        "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
+                        "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-neutral-600",
+                        "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700",
+                        "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-200 dark:focus:bg-neutral-800",
+                        "optionTemplate": "<div class=\"flex justify-between items-center w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 dark:text-blue-500 \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
+                        "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-neutral-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+                      }' class="hidden">
+                          <option selected disabled>Categories</option>
+                          @foreach ($categories as $categ)
+                          <option value="{{ $categ->id }}">{{ $categ->name }}</option>
+                          @endforeach
+                      </select>
+                      <div class="text-red-500 italic hidden mt-1" id="catError">Please tell us what you wrote!</div>
+                  </div>
+                  <div>
+                      <label for="title" class="block text-xl font-medium mb-2 dark:text-white">Pick a title for the blog</label>
+                      <input type="text" name="title" id="title" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Enter blog title">
+                      <div class="text-red-500 italic hidden mt-1" id="titleError">Please tell us what blog's title!</div>
+                  </div>
+              </div>
+              <div>
+                  <label for="body" class="block text-xl font-medium mb-2 dark:text-white">Start to share your story!</label>
+                  <input id="body" type="hidden" name="body">
+                  <trix-editor input="body" class="trix-Body growable-editor min-h-[35vh]"></trix-editor>
+                  <div class="text-red-500 italic hidden mt-1" id="contentError">Please tell us your story!</div>
+              </div>
+              <div class="c2:w-4/5 w-full">
+                  <label for="thumbnail" class="block text-xl font-medium mb-2 dark:text-white">Got a cool thumbnail? If not, we’ll choose cool image for you!</label>
+                  <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" accept="image/*">
+                  <img id="image_preview" src="" alt="Thumbnail Preview" class="mt-4 hidden max-w-full rounded-lg" />
+              </div>
+              <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
+                  <button aria-label="Close" data-hs-overlay="#AddBlogs" type="submit" name="save" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700">Close</button>
+                  <button onclick="onPost(event)" type="submit" id="postButton" name="post" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700">Post Blog</button>
+              </div>
+          </form>
       </div>
-      <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
-        <button aria-label="Close" data-hs-overlay="#AddBlogs" type="submit" name="save" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700">
-          Save
-        </button>
-        <button type="submit" name="post" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700">
-          Post Blog
-        </button>
-      </div>
-    </form>
-    </div>
-  </div>
 </div>
 
 
@@ -229,5 +253,78 @@
     }
   });
 
+  function onPost(e){
+      let isValid = true;
+
+      const blogForm = document.getElementById('blogForm');
+
+      // Get form elements
+      const category = document.querySelector('select[name="category_id"]');
+      const title = document.querySelector('input[name="title"]');
+      const body = document.querySelector('input[name="body"]');
+
+      // Get error elements
+      const catError = document.getElementById('catError');
+      const titleError = document.getElementById('titleError');
+      const contentError = document.getElementById('contentError');
+
+      // Validate category
+      if (category.value === "Categories" || category.value === "") {
+          catError.classList.remove('hidden');
+          isValid = false;
+      } else {
+          catError.classList.add('hidden');
+      }
+
+      // Validate title
+      if (title.value.trim() === "") {
+          titleError.classList.remove('hidden');
+          isValid = false;
+      } else {
+          titleError.classList.add('hidden');
+      }
+
+      // Validate body
+      if (body.value.trim() === "") {
+          contentError.classList.remove('hidden');
+          isValid = false;
+      } else {
+          contentError.classList.add('hidden');
+      }
+
+      // Submit the form if valid
+      if (!isValid) {
+          e.preventDefault();  
+      }
+  };
+  function limitHtml($html, $limit) {
+    $length = 0;
+    $result = '';
+    $isInsideTag = false;
+
+    // Use regex to find the tags and text
+    preg_match_all('/<[^>]+>|[^<]+/', $html, $matches);
+
+    foreach ($matches[0] as $part) {
+        // Check if it's a tag
+        if (strpos($part, '<') === 0) {
+            $result .= $part; // Append the tag directly
+            $isInsideTag = true; // We are inside a tag
+        } else {
+            // It's a text part
+            if ($length + strlen($part) > $limit) {
+                // If adding this part exceeds the limit, truncate it
+                $remaining = $limit - $length;
+                $result .= substr($part, 0, $remaining);
+                break; // Stop processing further
+            }
+
+            $result .= $part; // Append the text part
+            $length += strlen($part); // Update the total length
+        }
+    }
+
+    return $result;
+}
 
 </script>

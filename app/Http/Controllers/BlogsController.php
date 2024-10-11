@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blogs;
+use App\Models\Draft;
 use Illuminate\Http\Request;
 
 class BlogsController extends Controller
@@ -28,7 +29,18 @@ class BlogsController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        $data = $request->all();
+        if(array_key_exists('post', $data)){
+            Blogs::create($data);
+            return redirect('/blog')->with("post", true);
+        }
+        else if(array_key_exists('save', $data)){
+            if($data['title'] !== null || $data['body'] !== null || isset($data['category_id']) || isset($data['thumbnail'])){
+                Draft::create($data);
+                return redirect('/blog')->with("save", true);
+            }
+        }
+        return redirect('/blog');
     }
 
     /**

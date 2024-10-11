@@ -124,7 +124,6 @@
     }
 
     function submitForm(e) {
-        console.log(e);
         const password = document.getElementById("pass").value;
         const confirmPassword = document.getElementById("conpass").value;
         const errorMessage = document.getElementById("error");

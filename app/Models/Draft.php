@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Draft extends Model
 {
+    protected $fillable = ['category_id', 'title', 'body', 'thumbnail'];
     use HasFactory;
 }

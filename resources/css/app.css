@@ -2,23 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-trix-editor h1 {
+trix-editor h1,
+.BodyWithTags h1 {
     @apply text-3xl font-bold my-4 text-gray-800;
 }
 
-trix-editor blockquote {
+trix-editor blockquote,
+.BodyWithTags blockquote {
     @apply border-l-4 border-gray-300 pl-4 italic text-gray-600 my-4;
 }
 
-trix-editor pre {
+trix-editor pre,
+.BodyWithTags pre {
     @apply bg-gray-100 p-4 rounded-lg overflow-x-auto text-sm font-mono text-gray-800 my-4;
 }
 
-trix-editor ul {
+trix-editor ul,
+.BodyWithTags ul {
     @apply list-disc pl-5 my-4;
 }
 
-trix-editor ol {
+trix-editor ol,
+.BodyWithTags ol {
     @apply list-decimal pl-5 my-4;
 }
 
