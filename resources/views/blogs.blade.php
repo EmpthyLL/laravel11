@@ -171,7 +171,7 @@
       </div>
       
       <div class="p-4 min-h-[70vh] overflow-y-auto">
-          <form id="blogForm" action="{{ url('/blog/create') }}" method="POST" class="flex flex-col gap-4">
+          <form id="blogForm" action="{{ url('/blog/admin') }}" method="POST" class="flex flex-col gap-4">
               @csrf
               <div class="grid c2:grid-cols-2 grid-cols-1 gap-2">
                   <div>
