@@ -48,11 +48,11 @@
     </div>
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
     @if (session()->has('post'))
-      <x-alert size="" message="<b>Woohoo!</b> Thank you for sharing your story!" header="Blog has been posted!" icon='
+      <x-alert  classAdd="hover:shadow-green-300"  size="" message="<b>Woohoo!</b> Thank you for sharing your story!" header="Blog has been posted!" icon='
       <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>'>green</x-alert>
     @endif
     @if (session()->has('save'))
-      <x-alert size="" message="<b>Let go!</b> You are making a huge progress!" header="Blog has been save!" icon='
+      <x-alert  classAdd="hover:shadow-yellow-300"  size="" message="<b>Let go!</b> You are making a huge progress!" header="Blog has been save!" icon='
       <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>'>yellow</x-alert>
     @endif
     <form id="searchForm" class="w-full mt-4 sm:w-10/1 2 lg:w-8/12">
@@ -88,7 +88,7 @@
       </div>
     </form>
         @if (count($blogs) === 0)
-        <x-alert shadow="" size="sm:w-2/3 lg:w-1/2" message="The Blog page will be updated soon. Stay tuned for new content!" header="No blog is posted yet!" icon='
+        <x-alert  classAdd="hover:shadow-rose-300"  size="sm:w-2/3 lg:w-1/2" message="The Blog page will be updated soon. Stay tuned for new content!" header="No blog is posted yet!" icon='
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-info">
               <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/>
               <line x1="12" x2="12" y1="16" y2="12"/>

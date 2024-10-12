@@ -13,10 +13,9 @@ export default {
     safelist: [
         {
             pattern:
-                /(?:bg|hover:bg|text|hover:text|shadow|hover:shadow)-(rose|pink|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|neutral)-(50|100|200|300|400|500|600|700|800|900|950)?/,
+                /(?:bg|hover:bg|text|hover:text|shadow|hover:shadow)-(rose|pink|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|neutral)-(100|200|300|400|500|600|700|800|900)/,
         },
     ],
-
     theme: {
         extend: {
             screens: {

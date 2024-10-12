@@ -1,5 +1,5 @@
-@props(['dismisable' => false, 'size' => 'w-max', 'header' => '', 'message' => '', 'icon' => ''])
-<div role="alert" class="rounded-lg p-6 {{ $size }} flex gap-3 items-center bg-{{ $slot }}-100 text-{{ $slot }}-600 shadow-lg hover:shadow-xl hover:shadow-{{ $slot }}-300 shadow-{{ $slot }}-200 border border-{{ $slot }}-300 transition-shadow duration-300">
+@props(['dismisable' => false, 'classAdd'=>'', 'size' => 'w-max', 'header' => '', 'message' => '', 'icon' => ''])
+<div role="alert" class="rounded-lg p-6 {{ $size }} flex gap-3 items-center bg-{{ $slot }}-100 text-{{ $slot }}-600 shadow-lg hover:shadow-xl {{ $classAdd }} shadow-{{ $slot }}-200 border border-{{ $slot }}-300 transition-shadow duration-300">
     <div>
         @if ($header)
         <div class="flex items-center gap-3 mb-2">
