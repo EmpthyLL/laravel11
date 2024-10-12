@@ -30,12 +30,11 @@ class BlogsController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        if(array_key_exists('post', $data)){
+        if (array_key_exists('post', $data)) {
             Blogs::create($data);
             return redirect('/blog')->with("post", true);
-        }
-        else if(array_key_exists('save', $data)){
-            if($data['title'] !== null || $data['body'] !== null || isset($data['category_id']) || isset($data['thumbnail'])){
+        } else if (array_key_exists('save', $data)) {
+            if ($data['title'] !== null || $data['body'] !== null || isset($data['category_id']) || isset($data['thumbnail'])) {
                 Draft::create($data);
                 return redirect('/blog')->with("save", true);
             }
@@ -70,8 +69,9 @@ class BlogsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Blogs $blogs)
+    public function destroy(Blogs $blog)
     {
-        //
+        Blogs::destroy($blog->blog_id);
+        return redirect('/blog')->with("delete", true);
     }
 }

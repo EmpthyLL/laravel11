@@ -9,7 +9,7 @@ class Blogs extends Model
 {
     use HasFactory;
     protected $table = "myblogs";
-    protected $primarykey = "blog_id";
+    protected $primaryKey = "blog_id";
     protected $fillable = ['category_id', 'title', 'body', 'thumbnail'];
 
     public function comments()
