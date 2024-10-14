@@ -3,8 +3,8 @@
   <main>
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-6">
       <!-- Profile Card -->
-      <div class="border relative border-yellow-200 shadow-lime-100 hover:shadow-lime-200 transition-shadow shadow-lg hover:shadow-xl p-6 rounded-lg bg-lime-100 flex flex-col items-center gap-6 h-max">
-          <img src="{{ asset('img/img_' . (($user->id - 1) % 25 + 1) . '.jpg') }}" class="rounded-full w-[150px] p-1 border-2 border-yellow-200 shadow-lg bg-yellow-100" alt="Profile Picture">
+      <div class="border relative border-lime-200 shadow-lime-100 hover:shadow-lime-200 transition-shadow shadow-lg hover:shadow-xl p-6 rounded-lg bg-lime-100 flex flex-col items-center gap-6 h-max">
+          <img src="{{ asset('img/img_' . (($user->id - 1) % 25 + 1) . '.jpg') }}" class="rounded-full w-[150px] p-1 border-2 border-lime-200 shadow-lg bg-lime-100" alt="Profile Picture">
           @if (auth()->user()->id === $user->id)
           <div aria-haspopup="dialog" aria-expanded="false" aria-controls="changeProfile" data-hs-overlay="#changeProfile" class="absolute top-0 right-0 m-2 text-yellow-300 bg-gradient-to-r from-yellow-100 to-yellow-200 p-2 rounded-full shadow-lg hover:shadow-none transition-shadow duration-300 ease-in-out">
             <svg xmlns="http://www.w3.org/2000/svg" 
@@ -32,7 +32,7 @@
       <div class="w-full lg:w-2/3 flex flex-col gap-6">
         @if (count($user->comments) === 0)
 
-        <x-alert classAdd="hover:shadow-teal-300"  message="You haven't wrote any comments yet!" header="No comments yet!" icon='
+        <x-alert classAdd="hover:shadow-teal-300" size="lg:w-max sm:w-2/3 lg:w-1/2" message="You haven't wrote any comments yet!" header="No comments yet!" icon='
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-info">
                     <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/>
                     <line x1="12" x2="12" y1="16" y2="12"/>

@@ -53,11 +53,15 @@
     @endif
     @if (session()->has('save'))
       <x-alert  classAdd="hover:shadow-yellow-300"  size="" message="<b>Let go!</b> You are making a huge progress!" header="Blog has been save!" icon='
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pocket"><path d="M4 3h16a2 2 0 0 1 2 2v6a10 10 0 0 1-10 10A10 10 0 0 1 2 11V5a2 2 0 0 1 2-2z"/><polyline points="8 10 12 14 16 10"/></svg>'>yellow</x-alert>
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pocket"><path d="M4 3h16a2 2 0 0 1 2 2v6a10 10 0 0 1-10 10A10 10 0 0 1 2 11V5a2 2 0 0 1 2-2z"/><polyline points="8 10 12 14 16 10"/></svg>'>yellow</x-alert>
     @endif
     @if (session()->has('delete'))
       <x-alert  classAdd="hover:shadow-pink-300"  size="" message="<b>Poof!</b> Now, it's gone for good!" header="Blog has been deleted!" icon='
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>'>pink</x-alert>
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>'>pink</x-alert>
+    @endif
+    @if (session()->has('edit'))
+      <x-alert  classAdd="hover:shadow-fuchsia-300"  size="" message="<b>Cering!</b> Let's see what has changed!" header="Blog has been edited!" icon='
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-pen-line"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-.5"/><path d="M16 4h2a2 2 0 0 1 1.73 1"/><path d="M8 18h1"/><path d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/></svg>'>fuchsia</x-alert>
     @endif
     <form id="searchForm" class="w-full mt-4 sm:w-10/1 2 lg:w-8/12">
       <div class="items-center mb-3 space-y-4 sm:flex sm:space-y-0">
@@ -142,8 +146,8 @@
                                 <span class="inline text-blue-600 hover:underline">Read more</span>
                             </div>
                         </div>
-                        <div class="ml-4">
-                            <img src="{{ asset('img/photo_' . (($blog['blog_id'] - 1) % 24 + 12) . '.jpg') }}" alt="Picture" class="rounded-lg max-h-[170px] w-full object-cover">
+                        <div class="ml-4 w-[170px] h-[170px] flex items-center justify-center overflow-hidden rounded-lg">
+                            <img src="{{ $blog->thumbnail ? asset("storage/$blog->thumbnail") : asset('img/photo_' . (($blog['blog_id'] - 1) % 24 + 12) . '.jpg') }}" alt="Picture" class="w-full h-full object-cover">
                         </div>
                     </div>
                 </article>
@@ -175,7 +179,7 @@
       </div>
       
       <div class="p-4 min-h-[70vh] overflow-y-auto">
-          <form id="blogForm" action="{{ url('/blog/admin') }}" method="POST" class="flex flex-col gap-4">
+          <form id="blogForm" action="{{ url('/blog') }}" enctype="multipart/form-data" method="POST" class="flex flex-col gap-4">
               @csrf
               <div class="grid c2:grid-cols-2 grid-cols-1 gap-2">
                   <div>
@@ -194,12 +198,12 @@
                           <option value="{{ $categ->id }}">{{ $categ->name }}</option>
                           @endforeach
                       </select>
-                      <div class="text-red-500 italic hidden mt-1" id="catError">Please tell us what you wrote!</div>
+                      <div class="text-red-500 italic hidden mt-1" id="catError">Please tell us what did you write!</div>
                   </div>
                   <div>
                       <label for="title" class="block text-xl font-medium mb-2 dark:text-white">Pick a title for the blog</label>
                       <input type="text" name="title" id="title" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Enter blog title">
-                      <div class="text-red-500 italic hidden mt-1" id="titleError">Please tell us what blog's title!</div>
+                      <div class="text-red-500 italic hidden mt-1" id="titleError">Please tell us what is the title!</div>
                   </div>
               </div>
               <div>
@@ -209,9 +213,13 @@
                   <div class="text-red-500 italic hidden mt-1" id="contentError">Please tell us your story!</div>
               </div>
               <div class="c2:w-4/5 w-full">
-                  <label for="thumbnail" class="block text-xl font-medium mb-2 dark:text-white">Got a cool thumbnail? If not, we’ll choose cool image for you!</label>
-                  <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" accept="image/*">
-                  <img id="image_preview" src="" alt="Thumbnail Preview" class="mt-4 hidden max-w-full rounded-lg" />
+                <label for="file_input" class="block text-xl font-medium mb-2 dark:text-white">
+                  Got a cool thumbnail? If not, we’ll choose a cool image for you!
+                </label>
+                <input onchange="uploadFile(event)"  name="thumbnail"  class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
+                      id="file_input" type="file" accept="image/*">
+                <div class="text-red-500 italic hidden mt-1" id="thumbError">The file size is too big. Maximum is 5MB!</div>
+                <img id="image_preview" src="" alt="Thumbnail Preview" class="mt-4 hidden lg:w-2/3 w-full rounded-lg" />
               </div>
               <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
                   <button aria-label="Close" data-hs-overlay="#AddBlogs" type="submit" name="save" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700">Close</button>
@@ -221,8 +229,30 @@
       </div>
 </div>
 
-
 <script>
+  function uploadFile(event) {
+    const file = event.target.files[0]; 
+    const maxSize = 5 * 1024 * 1024;
+
+    if (file && file.size > maxSize) {
+      event.target.value = "";
+      document.getElementById('thumbError').classList.remove('hidden');
+      return
+    }
+
+    const imgElement = document.getElementById('image_preview'); 
+    if (file) {
+      const reader = new FileReader(); 
+      reader.onload = function(e) {
+        imgElement.src = e.target.result; 
+        imgElement.classList.remove('hidden'); 
+      };
+      reader.readAsDataURL(file); 
+    } else {
+      imgElement.classList.add('hidden'); 
+      imgElement.src = ""; 
+    }
+  };
   const searchInput = document.getElementById('search');
   document.addEventListener('DOMContentLoaded', function() {
     
@@ -233,7 +263,6 @@
       searchInput.setSelectionRange(searchInput.value.length, searchInput.value.length);
     }
   });
-
   // Submit the form when user types in the input
   function submitSearch() {
     if(searchInput.value.trim() !== '' || searchInput.value === ''){
@@ -241,24 +270,6 @@
       form.submit();
     }
   }
-
-  document.getElementById('file_input').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    const imgElement = document.getElementById('image_preview');
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        imgElement.src = e.target.result;
-        imgElement.classList.remove('hidden'); // Show the image
-      };
-      reader.readAsDataURL(file); // Convert image to base64 URL
-    } else {
-      imgElement.classList.add('hidden'); // Hide the image if no file is selected
-      imgElement.src = ""; // Clear the image src
-    }
-  });
-
   function onPost(e){
       let isValid = true;
 
@@ -303,6 +314,9 @@
           e.preventDefault();  
       }
   };
+</script>
+
+<script>
   function limitHtml($html, $limit) {
     $length = 0;
     $result = '';
@@ -331,6 +345,5 @@
     }
 
     return $result;
-}
-
+  }
 </script>

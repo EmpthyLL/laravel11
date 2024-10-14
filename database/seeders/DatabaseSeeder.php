@@ -13,7 +13,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // // Create users
-        // $users = User::factory(50)->create();
+        $users = User::factory(9)->create();
+        User::create([
+            'fullname'=>'Sarah Basira',
+            "email"=>"sara.basir98@gmail.com",
+            'username'=>"Yuna",
+            'password'=>"122334"
+        ]);
 
         Categories::create([
             "name" => "Dear Diary",
@@ -35,17 +41,22 @@ class DatabaseSeeder extends Seeder
             "name" => "Travel Journal",
             "slug" => "travel-journal",
         ]);
+        Categories::create([
+            "name" => "Random",
+            "slug" => "random",
+        ]);
         
         // // Create blogs by recycling existing categories
-        // $blogs = Blogs::factory(20)->recycle($categories)->create();
+        $blogs = Blogs::factory(10)->recycle(Categories::all())->create();
 
         // // Create comments by recycling existing users and blogs
         // Comments::factory(120)->recycle([$users, $blogs])->create();
         // Comments::factory(120)->recycle($users)->recycle($blogs)->create();
 
         // Comments::factory(120)->recycle(User::factory(50)->create())->recycle(Blogs::factory(20)->recycle(Categories::factory(5)->create())->create())->create();
-        Comments::factory(1000)->recycle([
-            User::factory(350)->create(), 
-            Blogs::factory(50)->recycle(Categories::all())->create()])->create();
+        
+        // Comments::factory(1000)->recycle([
+        //     User::factory(350)->create(), 
+        //     Blogs::factory(50)->recycle(Categories::all())->create()])->create();
     }
 }

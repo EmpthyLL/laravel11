@@ -49,7 +49,11 @@ Route::get('/blog/{blog:blog_id}', function (Blogs $blog) {
     return view('blog', ['blog' => $blog, 'comments' => $comments, "categories" => $categories, "title" => $blog['title']]);
 });
 
-Route::resource('/blog/admin', BlogsController::class)->middleware('auth');
+Route::post('/blog', [BlogsController::class, 'store'])->middleware('auth');
+
+Route::delete('/blog/{blog:blog_id}', [BlogsController::class, 'destroy'])->middleware('auth');
+
+Route::put('/blog/{blog:blog_id}', [BlogsController::class, 'update'])->middleware('auth');
 
 Route::get('/profile', function () {
     $user = auth()->user();
