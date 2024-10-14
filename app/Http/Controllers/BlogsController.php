@@ -32,7 +32,7 @@ class BlogsController extends Controller
     {
         $data = $request->all();
         if (array_key_exists('post', $data)) {
-            if($request->file('thumbnail')){
+            if ($request->file('thumbnail')) {
                 $data['thumbnail'] = $request->file('thumbnail')->store('blog-thumbnails');
             }
             Blogs::create($data);
@@ -68,15 +68,15 @@ class BlogsController extends Controller
     public function update(Request $request, Blogs $blog)
     {
         $data = $request->all();
-        if($data['category_id'] == $blog->category_id && $data['title'] === $blog->title && $data['body'] === $blog->body && !isset($data['thumbnail'])){
+        if ($data['category_id'] == $blog->category_id && $data['title'] === $blog->title && $data['body'] === $blog->body && !isset($data['thumbnail'])) {
             return redirect('/blog');
         }
-        if($data['oldThumb']){
+        if ($data['oldThumb']) {
             Storage::delete($data['oldThumb']);
         }
         $data['thumbnail'] = $request->file('thumbnail')->store('blog-thumbnails');
-        $blogData = ['category_id'=>$data['category_id'], "title"=>$data['title'], 'body'=>$data['body'], "thumbnail"=>$data['thumbnail']];
-        Blogs::where("blog_id", $blog->blog_id)->update($blogData );
+        $blogData = ['category_id' => $data['category_id'], "title" => $data['title'], 'body' => $data['body'], "thumbnail" => $data['thumbnail']];
+        Blogs::where("blog_id", $blog->blog_id)->update($blogData);
         return redirect('/blog')->with("edit", true);
     }
 
@@ -85,7 +85,7 @@ class BlogsController extends Controller
      */
     public function destroy(Blogs $blog)
     {
-        if($blog->thumbnail){
+        if ($blog->thumbnail) {
             Storage::delete($blog->thumbnail);
         }
         Blogs::destroy($blog->blog_id);

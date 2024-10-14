@@ -146,7 +146,7 @@
                                 <span class="inline text-blue-600 hover:underline">Read more</span>
                             </div>
                         </div>
-                        <div class="ml-4 w-[170px] h-[170px] flex items-center justify-center overflow-hidden rounded-lg">
+                        <div class="ml-4 w-[170px] h-[170px] flex items-center justify-center overflow-hidden rounded-lg flex-shrink-0">
                             <img src="{{ $blog->thumbnail ? asset("storage/$blog->thumbnail") : asset('img/photo_' . (($blog['blog_id'] - 1) % 24 + 12) . '.jpg') }}" alt="Picture" class="w-full h-full object-cover">
                         </div>
                     </div>
