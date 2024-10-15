@@ -20,11 +20,15 @@ Route::get('/register', [RegisterController::class, 'index'])->middleware("guest
 
 
 Route::get('/', function () {
-    return view('home', ["title" => "Home Page"]);
+    return view('home', ["title" => auth()->check() ? "Welcome Back, ".auth()->user()->fullname : "Welcome, User!"]);
+});
+
+Route::get('/portfolio', function () {
+    return view('portfolio', ["title" => "Portfolio"]);
 });
 
 Route::get('/about', function () {
-    return view('about', ['name' => "Sarah", "job" => "Artist", "title" => "About Us"]);
+    return view('about', ['name' => "Sarah", "job" => "Artist", "title" => "About Me"]);
 });
 
 Route::get('/blog', function () {
@@ -33,7 +37,7 @@ Route::get('/blog', function () {
     //     $blogs->where('title','like','%'.request('key').'%');
     // }
     $categories = Categories::all();
-    return view('blogs', ['blogs' => Blogs::with('comments')->filter(request(['key', 'category']))->latest()->paginate(6)->withQueryString(), 'key' => request('key'), "categories" => $categories, "title" => "My Blogs"]);
+    return view('blogs', ['blogs' => Blogs::with('comments')->filter(request(['key', 'category']))->latest()->paginate(6)->withQueryString(), 'key' => request('key'), "categories" => $categories, "title" => "Your Stories"]);
 });
 // Route::get('/blog/category/{category:slug}', function (Categories $category) {
 //     $categories = Categories::all();
@@ -56,8 +60,7 @@ Route::delete('/blog/{blog:blog_id}', [BlogsController::class, 'destroy'])->midd
 Route::put('/blog/{blog:blog_id}', [BlogsController::class, 'update'])->middleware('auth');
 
 Route::get('/profile', function () {
-    $user = auth()->user();
-    return view('profile', ["title" => $user->username, "user" => $user->load(['comments'])]);
+    return view('profile', ["title" => auth()->user()->username, "user" => auth()->user()->load(['comments'])]);
 })->middleware('auth');
 
 Route::get('/profile/{user:username}', function (User $user) {

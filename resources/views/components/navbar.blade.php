@@ -9,6 +9,7 @@
               <div class="ml-10 flex items-baseline space-x-4">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                 <x-navlink :active="request()->is('/')" href="{{ url('/') }}">Home</x-navlink>
+                <x-navlink :active="request()->is('portfolio')" href="{{ url('/portfolio') }}">Portfolio</x-navlink>
                 <x-navlink :active="request()->is('about')" href="{{ url('/about') }}">About</x-navlink>
                 <x-navlink :active="request()->is('blog*')" href="{{ url('blog') }}">Blog</x-navlink>
                 <x-navlink  :active="request()->is('contact')" href="{{ url('contact') }}">Contact</x-navlink>
@@ -102,6 +103,7 @@
         <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
           <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
           <x-navlink :mobile="true" :active="request()->is('/')" href="{{ url('/') }}">Home</x-navlink>
+          <x-navlink :mobile="true" :active="request()->is('portfolio')" href="{{ url('/ortfolio') }}">Portfolio</x-navlink>
           <x-navlink :mobile="true" :active="request()->is('about')" href="{{ url('/about') }}">About</x-navlink>
           <x-navlink :mobile="true" :active="request()->is('blog*')" href="{{ url('blog') }}">Blog</x-navlink>
           <x-navlink :mobile="true"  :active="request()->is('contact')" href="{{ url('contact') }}">Contact</x-navlink>
