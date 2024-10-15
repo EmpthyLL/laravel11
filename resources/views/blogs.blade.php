@@ -106,8 +106,8 @@
         {{ $blogs->links() }}
           <div class="grid md:grid-cols-2 mt-4 mb-4 grid-cols-1 gap-4">
             @foreach ($blogs as $blog)
-            <a href="{{ url('blog/'.$blog['blog_id']) }}" class="block">
-                <article class="rounded-lg min-h-[290px] hover:shadow-lg p-4 shadow-md bg-gray-100">
+            <article class="rounded-lg min-h-[290px]">
+                  <a href="{{ url('blog/'.$blog['blog_id']) }}" class="block bg-slate-100 shadow-md p-4 hover:shadow-lg hover:bg-teal-50 hover:border-teal-300  border hover:border transition-colors rounded-b-none rounded-lg">
                     <h2 class="text-2xl flex items-center justify-between gap-4 font-bold tracking-tight text-gray-900">
                         <span class="truncate min-w-0 max-w-full flex-grow">{{ $blog['title'] }}</span>
                         
@@ -141,7 +141,7 @@
                     
                     <div class="flex items-center justify-between gap-4 mt-2">
                         <div class="flex">
-                            <div class="text-justify mt-2 overflow-hidden text-ellipsis max-h-[160px] max-w-[380px] BodyWithTags">
+                            <div class="text-justify mt-2 overflow-hidden text-ellipsis max-h-[170px] max-w-[380px] BodyWithTags">
                                 {!! limitHtml($blog['body'], 275) !!} 
                                 <span class="inline text-blue-600 hover:underline">Read more</span>
                             </div>
@@ -150,8 +150,29 @@
                             <img src="{{ $blog->thumbnail ? asset("storage/$blog->thumbnail") : asset('img/photo_' . (($blog['blog_id'] - 1) % 24 + 12) . '.jpg') }}" alt="Picture" class="w-full h-full object-cover">
                         </div>
                     </div>
+                  </a>
+
+                  <a href="{{ url('/profile/'.$blog->author->username) }}" class="flex bg-gradient-to-r rounded-t-none from-blue-300 via-purple-300 to-indigo-400 rounded-md p-4 shadow-md items-center gap-4 transition duration-300 ease-in-out hover:shadow-lg shadow-cyan-400 hover:shadow-teal-400">
+                    <!-- Author's Profile Image -->
+                    <img src="{{ $blog->author->profile_img ? asset('storage/' . $blog->author->profile_img) : asset('img/img_' . (($blog->author->id - 1) % 25 + 1) . '.jpg') }}" 
+                        alt="{{ $blog->author->name }}" 
+                        class="rounded-full w-[60px] h-[60px] p-1 border-2 border-teal-400 shadow-lg bg-teal-50 object-cover transition duration-300 ease-in-out hover:shadow-xl">
+                    
+                    <!-- Author's Info -->
+                    <div class="flex flex-col">
+                        <!-- Username with hover effect -->
+                        <span class="text-lg font-semibold text-yellow-200 drop-shadow-lg hover:text-yellow-100 hover:underline transition duration-200 ease-in-out">
+                            {{ $blog->author->username }}
+                        </span>
+                        <!-- Fullname -->
+                        <p class="text-sm drop-shadow-lg text-indigo-100 hover:text-indigo-200 transition duration-200">
+                            {{ $blog->author->fullname }}
+                        </p>
+                    </div>
+                </a>
+                
+                
                 </article>
-            </a>
             @endforeach
           </div>
         {{ $blogs->links() }}

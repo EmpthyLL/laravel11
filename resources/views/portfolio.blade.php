@@ -13,23 +13,23 @@
             </a>
           </div>
           <div class="pb-4">
-            <a href="img/{{ ($num ? 0 : 1) ? "photo_" : "pic_"}}{{ $i }}.jpg" class="rounded-lg overflow-hidden">
+            <a href="img/{{ ($num ? 0 : 1) ? "photo_" : "pic_"}}{{ $i }}.jpg" class="rounded-lg hover:opacity-80 overflow-hidden">
               <img src="img/{{ ($num ? 0 : 1) ? "photo_" : "pic_"}}{{ $i }}.jpg">
             </a>
           </div>
         @endfor
         <div class="pb-4">
-          <a href="img/pic_10.jpg" class="rounded-lg overflow-hidden">
+          <a href="img/pic_10.jpg" class="rounded-lg hover:opacity-80 overflow-hidden">
             <img src="img/pic_10.jpg">
           </a>
         </div>
         <div class="pb-4">
-          <a href="img/pic_11.jpg" class="rounded-lg overflow-hidden">
+          <a href="img/pic_11.jpg" class="rounded-lg hover:opacity-80 overflow-hidden">
             <img src="img/pic_11.jpg">
           </a>
         </div>
         <div class="pb-4">
-          <a href="img/pic_12.jpg" class="rounded-lg overflow-hidden">
+          <a href="img/pic_12.jpg" class="rounded-lg hover:opacity-80 overflow-hidden">
             <img src="img/pic_12.jpg">
           </a>
         </div>

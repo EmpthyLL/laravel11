@@ -10,7 +10,7 @@ class Blogs extends Model
     use HasFactory;
     protected $table = "myblogs";
     protected $primaryKey = "blog_id";
-    protected $fillable = ['category_id', 'title', 'body', 'thumbnail'];
+    protected $fillable = ['category_id', 'author_id', 'title', 'body', 'thumbnail'];
 
     public function comments()
     {
@@ -19,6 +19,10 @@ class Blogs extends Model
     public function category()
     {
         return $this->belongsTo(Categories::class, 'category_id');
+    }
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'author_id');
     }
     public function scopeFilter($query, array $filter): void
     {

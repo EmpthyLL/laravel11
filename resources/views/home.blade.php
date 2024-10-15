@@ -4,7 +4,7 @@
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div class="p-6 rounded-lg flex flex-col gap-6 bg-gray-50 shadow-lg">
             <!-- Hero Section -->
-            <div class="text-center flex flex-col bg-gradient-to-r from-sky-200 to-sky-50 p-4 rounded-lg shadow-md">
+            <div class="text-center flex border border-cyan-200 flex-col bg-gradient-to-r from-sky-200 to-sky-50 p-4 rounded-lg shadow-md">
                 <h1 class="font-semibold text-2xl text-teal-500">Freelance Photographer and Digital Artist based in Solo, Indonesia</h1>
                 <h1 class="font-medium text-lg text-teal-400 mt-2">Winning multiple awards in various photography and digital art competitions</h1>
                 <div class="mt-5">
@@ -16,7 +16,7 @@
             </div>
 
             <!-- Portfolio Section -->
-            <div class="bg-white p-5 rounded-lg flex flex-col gap-5 shadow-md">
+            <div class="bg-white p-5 rounded-lg border flex flex-col gap-5 shadow-md">
                 <h1 class="font-bold text-3xl text-gray-800">My Works</h1>
                 <div class="md:columns-4 columns-2 gap-4">
                   @for ($i = 1; $i <= 5; $i++)
@@ -37,7 +37,7 @@
             </div>
 
             <!-- Footer Buttons -->
-            <div class="flex gap-4 justify-center items-center bg-white shadow-md rounded-lg p-5">
+            <div class="flex gap-4 justify-center items-center bg-white shadow-md border rounded-lg p-5">
               <a href="{{ url('about') }}" class="py-3 px-6 inline-flex items-center gap-x-2 text-lg font-medium rounded-lg border border-transparent bg-gradient-to-r from-green-500 to-green-600 text-white hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
                 More About Me
