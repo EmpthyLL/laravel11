@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogsController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
@@ -18,9 +19,11 @@ Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('/register', [RegisterController::class, 'index'])->middleware("guest");;
 
+Route::get('/dasbboard', [RegisterController::class, 'index'])->middleware("guest");;
+
 
 Route::get('/', function () {
-    return view('home', ["title" => auth()->check() ? "Welcome Back, ".auth()->user()->fullname : "Welcome, User!"]);
+    return view('home', ["title" => auth()->check() ? "Welcome Back, " . auth()->user()->fullname : "Welcome, User!"]);
 });
 
 Route::get('/portfolio', function () {
@@ -73,3 +76,5 @@ Route::get('/profile/{user:username}', function (User $user) {
 Route::get('/contact', function () {
     return view('contact', ['contact' => ['email' => 'sarah.marc@gmail.com', 'phone' => '08766554533'], "title" => "Contact Us"]);
 });
+
+Route::get('/category/admin/checkSlug', [CategoryController::class, 'checkSlug']);

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,8 +15,13 @@ class Categories extends Model
     {
         return $this->hasMany(Blogs::class, "category_id");
     }
-    public function users()
+    use Sluggable;
+    public function sluggable(): array
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }

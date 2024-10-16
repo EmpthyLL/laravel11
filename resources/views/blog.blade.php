@@ -277,9 +277,12 @@
                     "isClosePrev": false
                     }' onclick="onPost(event)" type="button" id="editButton" name="post" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700">Publish Edits</button>
                 </div>
-            </form>
-        </div>
+           
+        </form>
+    </div>
   </div>
+</div>
+</div>
 
   <script>
     function submitEdits(){
