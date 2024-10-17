@@ -875,7 +875,7 @@ function toggleAddButtonState() {
 
 </script>
 
-<script>
+{{-- <script>
   function limitHtml($html, $limit) {
     $length = 0;
     $result = '';
@@ -905,4 +905,4 @@ function toggleAddButtonState() {
 
     return $result;
   }
-</script>
+</script> --}}
