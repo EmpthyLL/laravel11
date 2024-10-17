@@ -7,40 +7,44 @@
             <div class="bg-gray-100 rounded shadow-lg pb-4 relative">
                 <!-- Dropdown button positioned at the top right -->
                 <div class="absolute top-[-15px] right-[-15px]">
-                    <div class="hs-dropdown relative inline-flex">
-                        <button id="hs-dropdown-default" type="button" class="hs-dropdown-toggle py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-gray-200 bg-white text-gray-800 shadow-lg hover:bg-gray-50 focus:outline-none focus:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-vertical">
-                                <circle cx="12" cy="12" r="1"/>
-                                <circle cx="12" cy="5" r="1"/>
-                                <circle cx="12" cy="19" r="1"/>
-                            </svg>
-                        </button>
-            
-                        <!-- Dropdown Menu with the pen button -->
-                        <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-max w-max bg-white shadow-md rounded-lg mt-2 dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-default">
-                            <div class="p-1 space-y-0.5">
-                                <!-- Pen button inside the dropdown -->
-                                <button aria-haspopup="dialog" 
-                                    onclick="fillValue()" 
-                                    data-blog-title="{{ $blog->title }}" 
-                                    data-blog-body="{{ $blog->body }}" aria-expanded="false" aria-controls="EditPost" data-hs-overlay="#EditPost" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 w-full dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
-                                    </svg>
-                                    <span>
-                                    Edit Post
-                                    </span>
-                                </button>
-                                    <button aria-haspopup="dialog" aria-expanded="false" aria-controls="DeleteDialog" data-hs-overlay="#DeleteDialog" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 w-full dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
-                                    <span>
-                                        Delete Post
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    @auth
+                        @cannot("reader")
+                            @can("update", $blog)
+                                <div class="hs-dropdown relative inline-flex">
+                                    <button id="hs-dropdown-default" type="button" class="hs-dropdown-toggle py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-gray-200 bg-white text-gray-800 shadow-lg hover:bg-gray-50 focus:outline-none focus:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-vertical">
+                                            <circle cx="12" cy="12" r="1"/>
+                                            <circle cx="12" cy="5" r="1"/>
+                                            <circle cx="12" cy="19" r="1"/>
+                                        </svg>
+                                    </button>
+                    
+                                    <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-max w-max bg-white shadow-md rounded-lg mt-2 dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-default">
+                                        <div class="p-1 space-y-0.5">
+                                            @can("update", $blog)
+                                                <!-- Edit button -->
+                                                <button aria-haspopup="dialog" onclick="fillValue()" data-blog-title="{{ $blog->title }}" data-blog-body="{{ $blog->body }}" aria-expanded="false" aria-controls="EditPost" data-hs-overlay="#EditPost" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 w-full dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
+                                                    </svg>
+                                                    <span>Edit Post</span>
+                                                </button>
+                                            @endcan
+                                            @can("delete", $blog)
+                                                <!-- Delete button -->
+                                                <button aria-haspopup="dialog" aria-expanded="false" aria-controls="DeleteDialog" data-hs-overlay="#DeleteDialog" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 w-full dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                                                    <span>Delete Post</span>
+                                                </button>
+                                            @endcan
+                                        </div>
+                                    </div>
+                                </div>
+                            @endcan
+                        @endcannot
+                    @endauth
                 </div>
+                
             
                 <!-- Main content -->
                 <div class="flex rounded-lg justify-center py-8 px-10 flex-col c2:flex-row c2:items-start gap-6">
@@ -131,81 +135,86 @@
     </main>
 </x-layout>
 
-<div id="DeleteDialog" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="DeleteDialog-label">
-  <div class="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
-    <div class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
-      <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
-        <h3 id="DeleteDialog-label" class="font-bold text-gray-800 text-3xl dark:text-white">
-          Are You Sure?
-        </h3>
-            <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600" aria-label="Close" data-hs-overlay="#DeleteDialog">
-            <span class="sr-only">Close</span>
-            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 6 6 18"></path>
-                <path d="m6 6 12 12"></path>
-            </svg>
-            </button>
-      </div>
-      <div class="p-4 overflow-y-auto flex items-center gap-5">
-        <div class="w-max">
-        <svg class="text-red-500" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+@auth
+@cannot("reader")
+    @can("delete", $blog)
+    <div id="DeleteDialog" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="DeleteDialog-label">
+    <div class="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
+        <div class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
+        <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
+            <h3 id="DeleteDialog-label" class="font-bold text-gray-800 text-3xl dark:text-white">
+            Are You Sure?
+            </h3>
+                <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600" aria-label="Close" data-hs-overlay="#DeleteDialog">
+                <span class="sr-only">Close</span>
+                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                </svg>
+                </button>
         </div>
-        <p class="mt-1 text-gray-800 dark:text-neutral-400">
-            <b>Whoa!</b> This action is irreversible. Once you delete this post, it's gone forever. Are you absolutely, positively sure you want to proceed?
-        </p>
-      </div>
-      <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
-        <form action="{{ url('/blog/'.$blog->blog_id ) }}" method="post">
-            @method('delete')
-            @csrf
-            <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-overlay="#DeleteDialog">
-            Cancel
-            </button>
-            <button type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:bg-red-700 disabled:opacity-50 disabled:pointer-events-none">
-            Delete Post
-            </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="ConfirmDialog" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none [--overlay-backdrop:static]" role="dialog" tabindex="-1" aria-labelledby="ConfirmDialog-label">
-  <div class="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
-    <div class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
-      <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
-        <h3 id="ConfirmDialog-label" class="font-bold text-gray-800 text-3xl dark:text-white">
-          Are You Sure?
-        </h3>
-            <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600" aria-label="Close" data-hs-overlay="#ConfirmDialog">
-            <span class="sr-only">Close</span>
-            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 6 6 18"></path>
-                <path d="m6 6 12 12"></path>
-            </svg>
-            </button>
-      </div>
-      <div class="p-4 overflow-y-auto flex items-center gap-5">
-        <div class="w-max">
-        <svg class="text-fuchsia-500" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+        <div class="p-4 overflow-y-auto flex items-center gap-5">
+            <div class="w-max">
+            <svg class="text-red-500" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+            </div>
+            <p class="mt-1 text-gray-800 dark:text-neutral-400">
+                <b>Whoa!</b> This action is irreversible. Once you delete this post, it's gone forever. Are you absolutely, positively sure you want to proceed?
+            </p>
         </div>
-        <p class="mt-1 text-gray-800 dark:text-neutral-400">
-            <b>Whoa!</b> This action will publish all the edits and will be view by other people. Are you absolutely, positively sure you want to proceed?
-        </p>
-      </div>
-      <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
-            <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-overlay="#ConfirmDialog">
-            Cancel
-            </button>
-            <button onclick="submitEdits()" type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-fuchsia-600 text-white hover:bg-fuchsia-700 focus:outline-none focus:bg-fuchsia-700 disabled:opacity-50 disabled:pointer-events-none">
-            Yes, I'm sure
-            </button>
-      </div>
+        <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
+            <form action="{{ url('/blog/'.$blog->blog_id ) }}" method="post">
+                @method('delete')
+                @csrf
+                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-overlay="#DeleteDialog">
+                Cancel
+                </button>
+                <button type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:bg-red-700 disabled:opacity-50 disabled:pointer-events-none">
+                Delete Post
+                </button>
+            </form>
+        </div>
+        </div>
     </div>
-  </div>
-</div>
+    </div>
+    @endcan
 
-<div id="EditPost" class="hs-overlay hidden size-full fixed top-0 start-0 z-[60] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="EditPost-label">
+    @can("update", $blog)
+    <div id="ConfirmDialog" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none [--overlay-backdrop:static]" role="dialog" tabindex="-1" aria-labelledby="ConfirmDialog-label">
+    <div class="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
+        <div class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
+        <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
+            <h3 id="ConfirmDialog-label" class="font-bold text-gray-800 text-3xl dark:text-white">
+            Are You Sure?
+            </h3>
+                <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600" aria-label="Close" data-hs-overlay="#ConfirmDialog">
+                <span class="sr-only">Close</span>
+                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                </svg>
+                </button>
+        </div>
+        <div class="p-4 overflow-y-auto flex items-center gap-5">
+            <div class="w-max">
+            <svg class="text-fuchsia-500" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+            </div>
+            <p class="mt-1 text-gray-800 dark:text-neutral-400">
+                <b>Whoa!</b> This action will publish all the edits and will be view by other people. Are you absolutely, positively sure you want to proceed?
+            </p>
+        </div>
+        <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
+                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-overlay="#ConfirmDialog">
+                Cancel
+                </button>
+                <button onclick="submitEdits()" type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-fuchsia-600 text-white hover:bg-fuchsia-700 focus:outline-none focus:bg-fuchsia-700 disabled:opacity-50 disabled:pointer-events-none">
+                Yes, I'm sure
+                </button>
+        </div>
+        </div>
+    </div>
+    </div>
+    <div id="EditPost" class="hs-overlay hidden size-full fixed top-0 start-0 z-[60] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="EditPost-label">
+    @endcan
     <div class="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 m-3 flex items-center lg:mx-auto min-h-[calc(100%-3.5rem)]">
       <div class="w-full mx-5 flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70 transition-all duration-500 ease-in-out"
         style="transition: width 0.5s ease-in-out;">
@@ -240,12 +249,19 @@
                         }' class="hidden">
                             <option selected disabled>Categories</option>
                             @foreach ($categories as $categ)
-                            @if ($categ->name === $blog->category->name)
-                            <option selected value="{{ $categ->id }}">{{ $categ->name }}</option>
-                            @else
-                            <option value="{{ $categ->id }}">{{ $categ->name }}</option>
+                            @if ($categ->id !== 6)
+                                @if ($categ->id === $blog->category->id)
+                                <option selected value="{{ $categ->id }}">{{ $categ->name }}</option>
+                                @else
+                                <option value="{{ $categ->id }}">{{ $categ->name }}</option>
+                                @endif
                             @endif
                             @endforeach
+                            @if ($blog->category->id === 6)
+                            <option selected value="{{ $categories[5]->id }}">{{ $categories[5]->name }}</option>
+                            @else
+                            <option value="{{ $categories[5]->id }}">{{ $categories[5]->name }}</option>
+                            @endif
                         </select>
                         <div class="text-red-500 italic hidden mt-1" id="catError">Please tell us what the blog is about!</div>
                     </div>
@@ -278,11 +294,13 @@
                     }' onclick="onPost(event)" type="button" id="editButton" name="post" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700">Publish Edits</button>
                 </div>
            
-        </form>
+            </form>
+        </div>
     </div>
-  </div>
+    </div>
 </div>
-</div>
+@endcannot
+@endauth
 
   <script>
     function submitEdits(){

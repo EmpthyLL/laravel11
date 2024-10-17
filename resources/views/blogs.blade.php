@@ -36,6 +36,7 @@
     <div class="border p-2 mx-4 relative bg-slate-300 rounded-md shadow-md flex flex-col gap-3">
       <h3 class="font-bold text-2xl text-gray-700">Categories</h3>
       <div class="absolute top-[-15px] right-[-15px]">
+        @can("superadmin")
         <div class="hs-dropdown relative inline-flex">
             <button id="hs-dropdown-default" type="button" class="hs-dropdown-toggle py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-gray-200 bg-white text-gray-800 shadow-lg hover:bg-gray-50 focus:outline-none focus:bg-gray-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-vertical">
@@ -72,8 +73,9 @@
                 </div>
             </div>
         </div>
+        @endcan
     </div>
-      <div class="p-2 bg-white flex flex-wrap rounded-md gap-4">
+    <div class="p-2 bg-white flex flex-wrap rounded-md gap-4">
           <a href="{{ url('/blog'). (request('key') ? '?key='.request('key') : '' )}}" class="rounded {{ !request()->has('category') ? 'bg-slate-600 text-white' : 'hover:bg-blue-200' }} py-1 px-3">All</a>
           @foreach ($categories as $categ)
             @if ($categ->id !== 6)
@@ -109,8 +111,8 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-pen-line"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-.5"/><path d="M16 4h2a2 2 0 0 1 1.73 1"/><path d="M8 18h1"/><path d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/></svg>'>fuchsia</x-alert>
     @endif
     @if (session()->has('addcate'))
-      <x-alert  classAdd="hover:shadow-fuchsia-300"  size="" message="<b>Good Job!</b> Let's see what has changed!" header="Blog has been edited!" icon='
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-pen-line"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-.5"/><path d="M16 4h2a2 2 0 0 1 1.73 1"/><path d="M8 18h1"/><path d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/></svg>'>fuchsia</x-alert>
+      <x-alert  classAdd="hover:shadow-emerald-300"  size="" message="<b>Good Job!</b> {{ $addcate }} categories has been created!" header="Categories has been added!" icon='
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-pen-line"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-.5"/><path d="M16 4h2a2 2 0 0 1 1.73 1"/><path d="M8 18h1"/><path d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/></svg>'>emerald</x-alert>
     @endif
     <form id="searchForm" class="w-full mt-4 sm:w-10/1 2 lg:w-8/12">
       <div class="items-center mb-3 space-y-4 sm:flex sm:space-y-0">
@@ -134,6 +136,7 @@
             id="search"
             oninput="submitSearch()"
           />
+          @can("writer")
           <button aria-haspopup="dialog" aria-expanded="false" aria-controls="AddBlogs" data-hs-overlay="#AddBlogs" type="button" class="w-max py-3 ml-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-cyan-500 text-white hover:bg-cyan-600 focus:outline-none focus:bg-cyan-600 disabled:opacity-50 disabled:pointer-events-none dark:bg-white dark:text-neutral-800">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus">
               <path d="M5 12h14"/>
@@ -141,6 +144,7 @@
             </svg>
             <span class="w-max">Add Blogs</span>
           </button>
+          @endcan
         </div>
       </div>
     </form>
@@ -229,6 +233,7 @@
   </main>
 </x-layout> 
 
+@can("superadmin")
 <div id="AddCategory" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="AddCategory-label">
   <div class="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 m-3 flex items-center lg:mx-auto min-h-[calc(100%-3.5rem)]">
     <div class="w-full mx-[200px] flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70 transition-all duration-500 ease-in-out"
@@ -461,6 +466,9 @@
     </div>
   </div>
 </div>
+@endcan
+
+@can("writer")
 <div id="AddBlogs" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="AddBlogs-label">
   <div class="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 m-3 flex items-center lg:mx-auto min-h-[calc(100%-3.5rem)]">
     <div class="w-full mx-5 flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70 transition-all duration-500 ease-in-out"
@@ -495,8 +503,11 @@
                       }' class="hidden">
                           <option selected disabled>Categories</option>
                           @foreach ($categories as $categ)
+                          @if ($categ->id !== 6)
                           <option value="{{ $categ->id }}">{{ $categ->name }}</option>
+                          @endif
                           @endforeach
+                          <option value="{{ $categories[5]->id }}">{{ $categories[5]->name }}</option>
                       </select>
                       <div class="text-red-500 italic hidden mt-1" id="catError">Please tell us what did you write!</div>
                   </div>
@@ -530,6 +541,7 @@
       </div>
     </div>
 </div>
+@endcan
 
 <script>
   function uploadFile(event) {
@@ -680,6 +692,7 @@ function selectCategory(id, name, e, action) {
       editInput.dispatchEvent(event);
 
       originalCategoryName = name
+      document.getElementById('editButton').removeAttribute('disabled');
     }
     if(action=='delete'){
       document.getElementById('deleteId').value = id;
@@ -711,11 +724,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const slugCount = {};
     const slugMappings = {};
 
-  addButton.addEventListener('click', async function() {
-    const categoryName = createInput.value.trim(); 
+    addButton.addEventListener('click', async function() {
+    const categoryName = createInput.value.trim();
 
     if (!categoryName) {
-        createError.classList.remove('hidden'); 
+        createError.classList.remove('hidden');
         return;
     }
     createError.classList.add('hidden');
@@ -747,7 +760,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Create the remove button (X button)
     const removeButton = document.createElement('button');
     removeButton.className = 'ml-2 bg-slate-400 flex items-center justify-center text-gray-300 hover:text-gray-600 h-5 w-5 p-1 rounded-full hover:bg-slate-300 focus:outline-none';
-    removeButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>'; 
+    removeButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
     removeButton.setAttribute('aria-label', `Remove ${categoryName}`); // Accessibility improvement
 
     newCategory.appendChild(removeButton);
@@ -774,7 +787,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Remove the category from the list
         categoryList.removeChild(newCategory);
-        
+
         // Update the count
         count--;
 
@@ -795,13 +808,13 @@ document.addEventListener("DOMContentLoaded", function() {
     // Create hidden inputs for the new category
     const nameInput = document.createElement('input');
     nameInput.type = 'hidden';
-    nameInput.name = `name_${count}`;
+    nameInput.name = `name_${count}`; // Update name to use current count
     nameInput.id = `name_${categorySlug}`;
     nameInput.value = categoryName;
 
     const slugInput = document.createElement('input');
     slugInput.type = 'hidden';
-    slugInput.name = `slug_${count}`;
+    slugInput.name = `slug_${count}`; // Update slug to use current count
     slugInput.id = `slug_${categorySlug}`;
     slugInput.value = categorySlug;
 
@@ -812,34 +825,35 @@ document.addEventListener("DOMContentLoaded", function() {
     // Clear the input
     createInput.value = '';
     createInput.focus();
-  });
+});
 
-  function reindexInputs() {
-      // Re-index hidden input names and slugs after an item is removed
-      const nameInputs = document.querySelectorAll('input[name^="name_"]');
-      const slugInputs = document.querySelectorAll('input[name^="slug_"]');
-      
-      nameInputs.forEach((input, index) => {
-          const newIndex = index + 1; // Adjust for 1-based indexing
-          input.name = `name_${newIndex}`;
-      });
-      
-      slugInputs.forEach((input, index) => {
-          const newIndex = index + 1; // Adjust for 1-based indexing
-          input.name = `slug_${newIndex}`;
-      });
-  }
+function reindexInputs() {
+    // Re-index hidden input names and slugs after an item is removed
+    const nameInputs = document.querySelectorAll('input[name^="name_"]');
+    const slugInputs = document.querySelectorAll('input[name^="slug_"]');
+    
+    nameInputs.forEach((input, index) => {
+        const newIndex = index + 1; // Adjust for 1-based indexing
+        input.name = `name_${newIndex}`;
+    });
+    
+    slugInputs.forEach((input, index) => {
+        const newIndex = index + 1; // Adjust for 1-based indexing
+        input.name = `slug_${newIndex}`;
+    });
+}
 
-  function toggleAddButtonState() {
-      if (count > 0) {
-          addButton.removeAttribute('disabled');
-      } else {
-          addButton.setAttribute('disabled', true);
-      }
-  }
+function toggleAddButtonState() {
+  const addButton = document.getElementById('addButton')
+    if (count > 0) {
+        addButton.removeAttribute('disabled');
+    } else {
+        addButton.setAttribute('disabled', true);
+    }
+}
+
 
   editButton.addEventListener('click', async function() {
-    document.getElementById('editButton').removeAttribute('disabled');
     const categoryName = editInput.value.trim(); 
 
     if (!categoryName) {

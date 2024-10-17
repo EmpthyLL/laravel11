@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,5 +21,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Model::preventLazyLoading(! $this->app->isProduction());
+        Gate::define('superadmin', function ($user) {
+            return $user->role === 'superadmin';
+        });
+        Gate::define('writer', function ($user) {
+            return $user->role === 'writer';
+        });
+        Gate::define('reader', function ($user) {
+            return $user->role === 'reader';
+        });
     }
 }

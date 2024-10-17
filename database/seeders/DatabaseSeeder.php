@@ -18,6 +18,21 @@ class DatabaseSeeder extends Seeder
             'fullname' => 'Sarah Basira',
             "email" => "sara.basir98@gmail.com",
             'username' => "Yuna",
+            'role' => 'writer',
+            'password' => "122334"
+        ]);
+        User::create([
+            'fullname' => 'Oka Bhaskara',
+            "email" => "okabas1298@gmail.com",
+            'username' => "Oka",
+            'role' => 'reader',
+            'password' => "122334"
+        ]);
+        User::create([
+            'fullname' => 'Sarah Marc',
+            "email" => "sarah.marc@gmail.com",
+            'username' => "Sarahid",
+            'role' => 'superadmin',
             'password' => "122334"
         ]);
 

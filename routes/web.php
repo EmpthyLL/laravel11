@@ -4,6 +4,8 @@ use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Middleware\SuperAdmin;
+use App\Http\Middleware\Writer;
 use Illuminate\Support\Facades\Route;
 use App\Models\Blogs;
 use App\Models\Categories;
@@ -17,9 +19,12 @@ Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/register', [RegisterController::class, 'index'])->middleware("guest");;
+Route::get('/register', [RegisterController::class, 'index'])->middleware("guest");
 
-Route::get('/dasbboard', [RegisterController::class, 'index'])->middleware("guest");;
+
+Route::middleware([SuperAdmin::class])->group(function () {
+    Route::get('/dashboard', [RegisterController::class, 'index']);
+});
 
 
 Route::get('/', function () {
@@ -55,29 +60,34 @@ Route::get('/blog/{blog:blog_id}', function (Blogs $blog) {
     $comments = $blog->comments->load('users');
     return view('blog', ['blog' => $blog, 'comments' => $comments, "categories" => $categories, "title" => $blog['title']]);
 });
+Route::middleware([Writer::class])->group(function () {
+    Route::post('/blog', [BlogsController::class, 'store']);
+});
+Route::middleware([SuperAdmin::class, Writer::class])->group(function () {
 
-Route::post('/blog', [BlogsController::class, 'store'])->middleware('auth');
+    Route::delete('/blog/{blog:blog_id}', [BlogsController::class, 'destroy']);
 
-Route::delete('/blog/{blog:blog_id}', [BlogsController::class, 'destroy'])->middleware('auth');
-
-Route::put('/blog/{blog:blog_id}', [BlogsController::class, 'update'])->middleware('auth');
+    Route::put('/blog/{blog:blog_id}', [BlogsController::class, 'update']);
+});
 
 Route::get('/profile', function () {
-    return view('profile', ["title" => auth()->user()->username, "user" => auth()->user()->load(['comments'])]);
+    return view('profile', ["title" => auth()->user()->username, "user" => auth()->user()->load(['comments']), "blogs" => auth()->user()->blogs]);
 })->middleware('auth');
 
 Route::get('/profile/{user:username}', function (User $user) {
     if (!$user) {
         abort(404);
     }
-    return view('profile', ["title" => $user->username, "user" => $user->load(['comments'])]);
+    return view('profile', ["title" => $user->username, "user" => $user->load(['comments']), "blogs" => $user->blogs]);
 });
 
 Route::get('/contact', function () {
     return view('contact', ['contact' => ['email' => 'sarah.marc@gmail.com', 'phone' => '08766554533'], "title" => "Contact Us"]);
 });
 
-Route::get('/category/admin/checkSlug', [CategoryController::class, 'checkSlug']);
-Route::post('/category/admin', [CategoryController::class, 'store']);
-Route::put('/category/admin', [CategoryController::class, 'update']);
-Route::delete('/category/admin', [CategoryController::class, 'destroy']);
+Route::middleware([SuperAdmin::class])->group(function () {
+    Route::get('/category/admin/checkSlug', [CategoryController::class, 'checkSlug']);
+    Route::post('/category/admin', [CategoryController::class, 'store']);
+    Route::put('/category/admin', [CategoryController::class, 'update']);
+    Route::delete('/category/admin', [CategoryController::class, 'destroy']);
+});
