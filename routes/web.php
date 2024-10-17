@@ -78,3 +78,6 @@ Route::get('/contact', function () {
 });
 
 Route::get('/category/admin/checkSlug', [CategoryController::class, 'checkSlug']);
+Route::post('/category/admin', [CategoryController::class, 'store']);
+Route::put('/category/admin', [CategoryController::class, 'update']);
+Route::delete('/category/admin', [CategoryController::class, 'destroy']);

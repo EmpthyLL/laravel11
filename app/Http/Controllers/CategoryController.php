@@ -29,7 +29,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        dd($data);
+        $catCount = count($data) - 2;
+        $buildData =[];
+        for($i=1; $i <= $catCount/2; $i++){
+            for($j=1; $j <= 2; $j++){
+                //
+            }
+        }
+        Categories::created($data);
+        return redirect('/blog')->with("addcate", true);
     }
 
     /**

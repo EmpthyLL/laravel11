@@ -108,6 +108,10 @@
       <x-alert  classAdd="hover:shadow-fuchsia-300"  size="" message="<b>Cering!</b> Let's see what has changed!" header="Blog has been edited!" icon='
       <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-pen-line"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-.5"/><path d="M16 4h2a2 2 0 0 1 1.73 1"/><path d="M8 18h1"/><path d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/></svg>'>fuchsia</x-alert>
     @endif
+    @if (session()->has('addcate'))
+      <x-alert  classAdd="hover:shadow-fuchsia-300"  size="" message="<b>Good Job!</b> Let's see what has changed!" header="Blog has been edited!" icon='
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-pen-line"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-.5"/><path d="M16 4h2a2 2 0 0 1 1.73 1"/><path d="M8 18h1"/><path d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/></svg>'>fuchsia</x-alert>
+    @endif
     <form id="searchForm" class="w-full mt-4 sm:w-10/1 2 lg:w-8/12">
       <div class="items-center mb-3 space-y-4 sm:flex sm:space-y-0">
         <div class="items-center flex relative w-full">
@@ -247,9 +251,9 @@
           <div id="categoryList" class="flex flex-wrap gap-3">
             @foreach ($categories as $categ)
               @if ($categ->id !== 6)
-                <div class="border rounded-lg p-2 hover:shadow-lg bg-slate-100 shadow-md">
+                <button class="border rounded-lg p-2 hover:shadow-lg bg-slate-100 shadow-md">
                   {{ $categ->name }}
-                </div>
+                </button>
               @endif
             @endforeach
             <div id="random" class="border rounded-lg p-2 hover:shadow-lg bg-slate-100 shadow-md">
@@ -259,33 +263,33 @@
           <div>
             <label for="title" class="block text-xl font-medium mb-2 dark:text-white">What's the category name?</label>
             <div class="flex w-1/2">
-              <input type="text" name="category" id="category" class="py-3 px-4 block w-full border-gray-200 rounded-l-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Enter category name" autofocus>
+              <input type="text" name="category" id="createInput" class="py-3 px-4 block w-full border-gray-200 rounded-l-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Enter category name" autofocus>
               <button id="addList" type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-r-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none shrink-0 whitespace-nowrap">
                 Add List
               </button>
             </div>
-            <div class="text-red-500 italic hidden mt-1" id="titleError">Please tell us the category name!</div>
+            <div class="text-red-500 italic hidden mt-1" id="createError">Please tell us the category name!</div>
           </div>
         </div>
-        <form id="blogForm" action="{{ url('/category/admin') }}" enctype="multipart/form-data" method="POST" class="flex flex-col gap-4">
+        <form action="{{ url('/category/admin') }}" enctype="multipart/form-data" method="POST" class="flex flex-col gap-4">
           @csrf
-          <div id="allForms"></div>
+          <div id="createForms"></div>
           <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
-            <button aria-label="Close" data-hs-overlay="#AddCategory" type="submit" name="save" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700">Close</button>
-            <button onclick="onPost(event)" type="submit" id="postButton" name="post" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700">Upload Categories</button>
+            <button button-label="Close" data-hs-overlay="#AddCategory" type="button" name="save" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700">Close</button>
+            <button type="submit" id="addButton" name="post" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:bg-blue-400" disabled>Upload Categories</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
-<div id="EditCategory" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="EditCategory-label">
+<div id="EditCategory" class="hs-overlay hidden size-full fixed top-0 start-0 z-[60] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="EditCategory-label">
   <div class="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 m-3 flex items-center lg:mx-auto min-h-[calc(100%-3.5rem)]">
     <div class="w-full mx-[200px] flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70 transition-all duration-500 ease-in-out"
       style="transition: width 0.5s ease-in-out;">
       <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
         <h3 id="EditCategory-label" class="font-bold text-gray-800 text-4xl dark:text-white">
-          Add Category
+          Edit Category
         </h3>
         <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600" aria-label="Close" data-hs-overlay="#EditCategory">
           <span class="sr-only">Close</span>
@@ -302,41 +306,161 @@
           <div class="flex flex-wrap gap-3">
             @foreach ($categories as $categ)
               @if ($categ->id !== 6)
-                <div class="border rounded-lg p-2 hover:shadow-lg bg-slate-100 shadow-md">
+                <!-- Add click event to each category div -->
+                <button class="border rounded-lg p-2 category-btn hover:shadow-lg bg-slate-100 shadow-md category-option" 
+                     onclick="selectCategory({{ $categ->id }}, '{{ $categ->name }}', event, 'update')">
                   {{ $categ->name }}
-                </div>
+                </button>
               @endif
             @endforeach
-            <div id="addedList" class="hidden flex-wrap gap-3"></div>
-            <div class="border rounded-lg p-2 hover:shadow-lg bg-slate-100 shadow-md">
-              {{ $categories[5]->name }}
-            </div>
           </div>
+
           <div>
-            <label for="title" class="block text-xl font-medium mb-2 dark:text-white">What's the category name?</label>
+            <label for="title" class="block text-xl font-medium mb-2 dark:text-white">What do you wanna change it to?</label>
             <div class="flex w-1/2">
-              <input type="text" name="category" id="category" class="py-3 px-4 block w-full border-gray-200 rounded-l-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Enter category name" autofocus>
-              <button id="editList" type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-r-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none shrink-0 whitespace-nowrap">
+              <input type="text" name="category" id="editInput" class="py-3 px-4 block w-full border-gray-200 rounded-l-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" placeholder="Enter category name" autofocus>
+              <button id="editList" type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-r-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none shrink-0 whitespace-nowrap disabled:bg-blue-400" disabled>
                 Edit List
               </button>
             </div>
-            <div class="text-red-500 italic hidden mt-1" id="titleError">Please tell us the category name!</div>
+            <div class="text-red-500 italic hidden mt-1" id="editError">Please tell us the category name!</div>
           </div>
         </div>
-        <form id="blogForm" action="{{ url('/blog') }}" enctype="multipart/form-data" method="POST" class="flex flex-col gap-4">
+
+        <form id="cateForm" action="{{ url('/category/admin') }}" method="POST" class="flex flex-col gap-4">
           @method("put")
+          <input type="hidden" name="id" id="editId">
+          <input type="hidden" name="name" id="editName">
+          <input type="hidden" name="slug" id="editSlug">
           @csrf
-          <div id="allForms"></div>
+          <div id="editForms"></div>
           <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
-            <button aria-label="Close" data-hs-overlay="#EditCategory" type="submit" name="save" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700">Close</button>
-            <button onclick="onPost(event)" type="submit" id="editButton" name="post" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700">Upload Categories</button>
+            <button aria-label="Close" data-hs-overlay="#EditCategory" type="button" name="save" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700">Close</button>
+            <button aria-haspopup="dialog" aria-expanded="false" aria-controls="ConfirmDialog" data-hs-overlay="#ConfirmDialog" data-hs-overlay-options='{
+                    "isClosePrev": false
+                    }'  onclick="modalShow()" type="button" id="editButton" name="post" class="py-2 px-3 disabled:bg-blue-400 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" disabled>Update Categories</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+<div id="DeleteCategory" class="hs-overlay hidden size-full fixed top-0 start-0 z-[60] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="EditCategory-label">
+  <div class="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 m-3 flex items-center lg:mx-auto min-h-[calc(100%-3.5rem)]">
+    <div class="w-full mx-[200px] flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70 transition-all duration-500 ease-in-out"
+      style="transition: width 0.5s ease-in-out;">
+      <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
+        <h3 id="EditCategory-label" class="font-bold text-gray-800 text-4xl dark:text-white">
+          Delete Category
+        </h3>
+        <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600" aria-label="Close" data-hs-overlay="#EditCategory">
+          <span class="sr-only">Close</span>
+          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="p-4 min-h-[50vh] overflow-y-auto">
+        <label for="title" class="block text-xl font-medium mb-2 dark:text-white">Which category to change?</label>
+        <div class="flex-col mb-[20%] flex gap-4">
+          <div class="flex flex-wrap gap-3">
+            @foreach ($categories as $categ)
+              @if ($categ->id !== 6)
+                <!-- Add click event to each category div -->
+                <button class="border rounded-lg p-2 category-btn hover:shadow-lg bg-slate-100 shadow-md category-option" 
+                     onclick="selectCategory({{ $categ->id }}, '{{ $categ->name }}', event, 'delete')">
+                  {{ $categ->name }}
+                </button>
+              @endif
+            @endforeach
+          </div>
+        </div>
 
+        <form id="delForm" action="{{ url('/category/admin') }}" method="POST" class="flex flex-col gap-4">
+          @method("delete")
+          @csrf
+          <input type="hidden" name="id" id="deleteId">
+          <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
+            <button aria-label="Close" data-hs-overlay="#EditCategory" type="button" name="save" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700">Close</button>
+            <button aria-haspopup="dialog" aria-expanded="false" aria-controls="DeleteDialog" data-hs-overlay="#DeleteDialog" data-hs-overlay-options='{
+                    "isClosePrev": false
+                    }'  onclick="modalShow()" type="button" id="deleteButton" name="post" class="py-2 px-3 disabled:bg-rose-400 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-rose-600 text-white hover:bg-rose-700 focus:outline-none focus:bg-rose-700" disabled>Remove Categories</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="DeleteDialog" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="DeleteDialog-label">
+  <div class="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
+    <div class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
+      <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
+        <h3 id="DeleteDialog-label" class="font-bold text-gray-800 text-3xl dark:text-white">
+          Are You Sure?
+        </h3>
+            <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600" aria-label="Close" data-hs-overlay="#DeleteDialog">
+            <span class="sr-only">Close</span>
+            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+            </svg>
+            </button>
+      </div>
+      <div class="p-4 overflow-y-auto flex items-center gap-5">
+        <div class="w-max">
+        <svg class="text-red-500" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+        </div>
+        <p class="mt-1 text-gray-800 dark:text-neutral-400">
+            <b>Whoa!</b> This action is irreversible. Once you delete this post, it's gone forever. Are you absolutely, positively sure you want to proceed?
+        </p>
+      </div>
+      <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
+            <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-overlay="#DeleteDialog">
+            Cancel
+            </button>
+            <button onclick="submitDel()" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:bg-red-700 disabled:opacity-50 disabled:pointer-events-none">
+            Delete Post
+            </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="ConfirmDialog" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none [--overlay-backdrop:static]" role="dialog" tabindex="-1" aria-labelledby="ConfirmDialog-label">
+  <div class="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
+    <div class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
+      <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
+        <h3 id="ConfirmDialog-label" class="font-bold text-gray-800 text-3xl dark:text-white">
+          Are You Sure?
+        </h3>
+            <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600" aria-label="Close" data-hs-overlay="#ConfirmDialog">
+            <span class="sr-only">Close</span>
+            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+            </svg>
+            </button>
+      </div>
+      <div class="p-4 overflow-y-auto flex items-center gap-5">
+        <div class="w-max">
+        <svg class="text-fuchsia-500" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+        </div>
+        <p class="mt-1 text-gray-800 dark:text-neutral-400">
+            <b>Whoa!</b> This action will publish all the edits and will be view by other people. Are you absolutely, positively sure you want to proceed?
+        </p>
+      </div>
+      <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
+            <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-overlay="#ConfirmDialog">
+            Cancel
+            </button>
+            <button onclick="submitEdits()" type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-fuchsia-600 text-white hover:bg-fuchsia-700 focus:outline-none focus:bg-fuchsia-700 disabled:opacity-50 disabled:pointer-events-none">
+            Yes, I'm sure
+            </button>
+      </div>
+    </div>
+  </div>
+</div>
 <div id="AddBlogs" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="AddBlogs-label">
   <div class="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 m-3 flex items-center lg:mx-auto min-h-[calc(100%-3.5rem)]">
     <div class="w-full mx-5 flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70 transition-all duration-500 ease-in-out"
@@ -492,115 +616,248 @@
           e.preventDefault();  
       }
   };
-  function CreateCategory(){
-    
+  function submitEdits(){
+      const cateForm = document.getElementById('cateForm');
+      cateForm.submit()
   }
-  const categoryError = document.getElementById('titleError');
-  const categoryInput = document.getElementById('category');
-  categoryInput.addEventListener('input', function(){
-    if(categoryInput.value !== ''){
-      categoryError.classList.add('hidden');
+  function submitDel(){
+      const delForm = document.getElementById('delForm');
+      delForm.submit()
+  }
+  function modalShow(){
+    const confirmDialog = document.querySelector('#ConfirmDialog');
+    confirmDialog.classList.add('hidden');
+    confirmDialog.classList.remove('open');
+    confirmDialog.classList.remove('opened');
+    confirmDialog.setAttribute('aria-overlay', 'false');
+  }
+  const addButton = document.getElementById('addList');
+  const editButton = document.getElementById('editList');
+  const createInput = document.getElementById('createInput');
+  const editInput = document.getElementById('editInput');
+  const createError = document.getElementById('createError');
+  const editError = document.getElementById('editError');
+  const categoryList = document.getElementById('categoryList');
+  const random = document.getElementById('random');
+  const createForms = document.getElementById('createForms');
+  createInput.addEventListener('input', function(){
+    if(createInput.value !== ''){
+      createError.classList.add('hidden');
     }
   })
-  async function generateSlug(name) {
-        try {
-            const baseUrl = "{{ url('') }}";
-            const fullUrl = `${baseUrl}/category/admin/checkSlug?name=${encodeURIComponent(name)}`;
-            const response = await fetch(fullUrl);
-            
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status} - ${response.statusText}`);
-            }
-            
-            const data = await response.json();
-            return data.slug;
-        } catch (error) {
-            console.error('Error generating slug:', error);
-            return '';
-        }
-    }
-  document.addEventListener("DOMContentLoaded", function() {
-    const addButton = document.getElementById('addList');
-    const categoryInput = document.getElementById('category');
-    const categoryError = document.getElementById('titleError');
-    const categoryList = document.getElementById('categoryList');
-    const random = document.getElementById('random');
-    const allForms = document.getElementById('allForms');
+  editInput.addEventListener('change', function() {
+      const categoryName = editInput.value.trim(); // Trim the input value to avoid spaces
 
+      if (categoryName !== '') {
+          editError.classList.add('hidden'); // Hide the error message if the input is valid
+          editButton.removeAttribute('disabled'); // Enable the button
+      } else {
+          editError.classList.remove('hidden'); // Show error message if the input is empty
+          editButton.setAttribute('disabled', true); // Disable the button if the input is empty
+      }
+  });
+
+let originalCategoryName;
+function selectCategory(id, name, e, action) {
+      // Remove the selected styles from all buttons
+      const categoryBtn = document.querySelectorAll('.category-btn');
+      categoryBtn.forEach(category => {
+          category.classList.remove('bg-slate-500', 'text-white');
+          category.classList.add('bg-slate-100', 'text-black');
+      });
+
+      // Add the selected styles to the clicked button
+      e.target.classList.remove('bg-slate-100', 'text-black');
+      e.target.classList.add('bg-slate-500', 'text-white');
+    // Update the input fields
+    if(action=='update'){
+      editInput.value = name;
+      document.getElementById('editId').value = id;
+
+
+      // Manually trigger the change event
+      const event = new Event('change');
+      editInput.dispatchEvent(event);
+
+      originalCategoryName = name
+    }
+    if(action=='delete'){
+      document.getElementById('deleteId').value = id;
+      document.getElementById('deleteButton').removeAttribute('disabled');
+    }
+}
+
+  async function generateSlug(name) {
+      try {
+          const baseUrl = "{{ url('') }}";
+          const fullUrl = `${baseUrl}/category/admin/checkSlug?name=${encodeURIComponent(name)}`;
+          const response = await fetch(fullUrl);
+          
+          if (!response.ok) {
+              throw new Error(`Error: ${response.status} - ${response.statusText}`);
+          }
+          
+          const data = await response.json();
+          return data.slug;
+      } catch (error) {
+          console.error('Error generating slug:', error);
+          return '';
+      }
+  }
+  let count = 0
+
+document.addEventListener("DOMContentLoaded", function() { 
     // Store the counts for slugs
     const slugCount = {};
     const slugMappings = {};
 
+  addButton.addEventListener('click', async function() {
+    const categoryName = createInput.value.trim(); 
 
+    if (!categoryName) {
+        createError.classList.remove('hidden'); 
+        return;
+    }
+    createError.classList.add('hidden');
 
-    addButton.addEventListener('click', async function() {
-        const categoryName = categoryInput.value.trim(); 
+    // Generate the initial slug for the category
+    let baseSlug = await generateSlug(categoryName);
 
-        if (!categoryName) {
-            categoryError.classList.remove('hidden'); 
-            return;
+    // Initialize slug tracking if not present
+    if (!slugCount[categoryName]) {
+        slugCount[categoryName] = 0; // Initialize count
+        slugMappings[categoryName] = []; // Store the slugs
+    }
+
+    // Increment the slug count and create a new slug if necessary
+    slugCount[categoryName] += 1;
+    let categorySlug = baseSlug;
+
+    if (slugCount[categoryName] > 1) {
+        categorySlug = `${baseSlug}-${slugCount[categoryName]}`; // Create unique slug for duplicates
+    }
+
+    // Store the slug in the mappings
+    slugMappings[categoryName].push(categorySlug);
+
+    const newCategory = document.createElement('div');
+    newCategory.className = 'border rounded-lg p-2 hover:shadow-lg bg-slate-400 text-white shadow-md flex items-center justify-between';
+    newCategory.innerText = categoryName;
+
+    // Create the remove button (X button)
+    const removeButton = document.createElement('button');
+    removeButton.className = 'ml-2 bg-slate-400 flex items-center justify-center text-gray-300 hover:text-gray-600 h-5 w-5 p-1 rounded-full hover:bg-slate-300 focus:outline-none';
+    removeButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>'; 
+    removeButton.setAttribute('aria-label', `Remove ${categoryName}`); // Accessibility improvement
+
+    newCategory.appendChild(removeButton);
+
+    // Event listener for removing the category
+    removeButton.addEventListener('click', function() {
+        // Get the last (i.e., highest-numbered) slug for this category
+        const lastSlug = slugMappings[categoryName].pop(); // Remove the last entry
+
+        // Remove the hidden inputs associated with the highest-numbered slug
+        const nameInput = document.getElementById(`name_${lastSlug}`);
+        const slugInput = document.getElementById(`slug_${lastSlug}`);
+        if (nameInput) createForms.removeChild(nameInput);
+        if (slugInput) createForms.removeChild(slugInput);
+
+        // Decrease the slug count
+        slugCount[categoryName]--;
+
+        // If no more slugs for this category exist, delete the mappings and reset the count
+        if (slugMappings[categoryName].length === 0) {
+            delete slugMappings[categoryName];
+            delete slugCount[categoryName];
         }
-        categoryError.classList.add('hidden');
 
-        let categorySlug = await generateSlug(categoryName);
+        // Remove the category from the list
+        categoryList.removeChild(newCategory);
+        
+        // Update the count
+        count--;
 
-        if (!slugCount[categoryName]) {
-            slugCount[categoryName] = 0; 
-            slugMappings[categoryName] = categorySlug; 
-        }
+        // Re-index the hidden input names and slugs
+        reindexInputs();
 
-        slugCount[categoryName] += 1;
-
-        if (slugCount[categoryName] > 1) {
-            categorySlug = `${slugMappings[categoryName]}-${slugCount[categoryName]}`;
-        } else {
-            categorySlug = slugMappings[categoryName];
-        }
-
-        const newCategory = document.createElement('div');
-        newCategory.className = 'border rounded-lg p-2 hover:shadow-lg bg-slate-500 text-white shadow-md flex items-center justify-between';
-        newCategory.innerText = categoryName;
-
-        // Create the remove button (X button)
-        const removeButton = document.createElement('button');
-        removeButton.className = 'ml-2 bg-slate-500 flex items-center justify-center text-gray-300 hover:text-gray-500 h-5 w-5 p-1 rounded-full hover:bg-slate-400 focus:outline-none';
-        removeButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>'; 
-        removeButton.setAttribute('aria-label', `Remove ${categoryName}`); // Accessibility improvement
-
-        newCategory.appendChild(removeButton);
-
-        removeButton.addEventListener('click', function() {
-            const nameInput = document.getElementById(`name_${categorySlug}`);
-            const slugInput = document.getElementById(`slug_${categorySlug}`);
-            if (nameInput) allForms.removeChild(nameInput);
-            if (slugInput) allForms.removeChild(slugInput);
-
-            slugCount[categoryName]--;
-
-            categoryList.removeChild(newCategory);
-        });
-
-        categoryList.insertBefore(newCategory, random);
-
-        const nameInput = document.createElement('input');
-        nameInput.type = 'hidden';
-        nameInput.name = `name_${categorySlug}`;
-        nameInput.id = `name_${categorySlug}`;
-        nameInput.value = categoryName;
-
-        const slugInput = document.createElement('input');
-        slugInput.type = 'hidden';
-        slugInput.name = `slug_${categorySlug}`;
-        slugInput.id = `slug_${categorySlug}`;
-        slugInput.value = categorySlug;
-
-        allForms.appendChild(nameInput);
-        allForms.appendChild(slugInput);
-
-        categoryInput.value = '';
+        // Toggle the add button state based on the count
+        toggleAddButtonState();
     });
+
+    // Append the new category to the category list
+    categoryList.insertBefore(newCategory, random);
+
+    // Increment the count and update button state
+    count++;
+    toggleAddButtonState();
+
+    // Create hidden inputs for the new category
+    const nameInput = document.createElement('input');
+    nameInput.type = 'hidden';
+    nameInput.name = `name_${count}`;
+    nameInput.id = `name_${categorySlug}`;
+    nameInput.value = categoryName;
+
+    const slugInput = document.createElement('input');
+    slugInput.type = 'hidden';
+    slugInput.name = `slug_${count}`;
+    slugInput.id = `slug_${categorySlug}`;
+    slugInput.value = categorySlug;
+
+    // Append the hidden inputs to the form
+    createForms.appendChild(nameInput);
+    createForms.appendChild(slugInput);
+
+    // Clear the input
+    createInput.value = '';
+    createInput.focus();
   });
 
+  function reindexInputs() {
+      // Re-index hidden input names and slugs after an item is removed
+      const nameInputs = document.querySelectorAll('input[name^="name_"]');
+      const slugInputs = document.querySelectorAll('input[name^="slug_"]');
+      
+      nameInputs.forEach((input, index) => {
+          const newIndex = index + 1; // Adjust for 1-based indexing
+          input.name = `name_${newIndex}`;
+      });
+      
+      slugInputs.forEach((input, index) => {
+          const newIndex = index + 1; // Adjust for 1-based indexing
+          input.name = `slug_${newIndex}`;
+      });
+  }
+
+  function toggleAddButtonState() {
+      if (count > 0) {
+          addButton.removeAttribute('disabled');
+      } else {
+          addButton.setAttribute('disabled', true);
+      }
+  }
+
+  editButton.addEventListener('click', async function() {
+    document.getElementById('editButton').removeAttribute('disabled');
+    const categoryName = editInput.value.trim(); 
+
+    if (!categoryName) {
+        editError.classList.remove('hidden'); 
+        return;
+    }
+    editError.classList.add('hidden');
+
+    // Generate the initial slug for the category only if the name has changed
+    if (categoryName !== originalCategoryName) {
+        let baseSlug = await generateSlug(categoryName);
+        document.querySelector('#editSlug').value = baseSlug; 
+    }
+
+    // Always update the name input
+    document.querySelector('#editName').value = categoryName;
+  });
+});
 
 </script>
 
